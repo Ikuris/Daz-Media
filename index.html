@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Black Testament</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#22171a;--parch:#efe2cb;--parch2:#dfcbab;--gold:#d8a35c;--gold2:#f0d6b7;--rose:#e7b6a1;--wine:#653747;--wine2:#80475b;--muted:#bba9b3;--line:#5b3a4a;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:radial-gradient(ellipse at 85% 0%,var(--area-glow,#402037),transparent 55%),#0e0b12;color:#e8dfd5;font:18px/1.5 "Crimson Pro",Georgia,serif;overflow:hidden;transition:background .6s}
+button{font:inherit;cursor:pointer;color:inherit}
+h1,h2,h3,.cinzel{font-family:Cinzel,Georgia,serif;letter-spacing:.04em}
+.hidden{display:none!important}
+.btn{background:linear-gradient(#4a2533,#2a1520);border:1px solid #a06a76;border-radius:6px;padding:8px 14px;color:#fff1e4;transition:.15s}
+.btn:hover:not(:disabled){border-color:#f0c5a7;background:linear-gradient(#5e2f41,#361a28)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.btn.gold{background:linear-gradient(#e0ae6c,#9c6630);color:#1d0f0a;border-color:#f6d39c;font-weight:600}
+.btn.gold:hover:not(:disabled){background:linear-gradient(#efbf7c,#ae7538)}
+.btn.small{padding:4px 9px;font-size:15px}
+.btn.danger{background:linear-gradient(#7a2026,#45101a);border-color:#c45a5a}
+input,select,textarea{font:inherit;background:#100e14;border:1px solid #74566a;color:#fff;border-radius:6px;padding:8px 10px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px}
+input[type=range]{padding:0;width:100%}
+
+/* ---------- Title (original cover art) ---------- */
+#title{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:flex-end;padding:5vw;overflow:auto;
+ background:linear-gradient(90deg,rgba(9,6,12,.12),rgba(9,6,12,.9)),url('art/cover.jpg') center 30%/cover,#0e0b12}
+#title canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.titleCard{position:relative;width:min(500px,100%);padding:30px;text-align:center;background:rgba(13,10,17,.87);border:1px solid #a8785a;border-radius:8px;box-shadow:0 0 45px #000}
+.titleCard h1{margin:0;font-size:clamp(36px,6.5vw,62px);line-height:1.02;color:#f0d6b7;text-shadow:0 3px 12px #000;font-weight:900}
+.titleCard .sub{color:#e4c3b7;font-style:italic;margin:8px 0 18px}
+.menuBtn{display:block;width:100%;margin:9px 0;padding:12px;font-size:19px;font-family:Cinzel,Georgia,serif}
+.tagline{color:#bba9b3;font-size:15px;margin-top:10px}
+.studio{margin-top:14px;font-family:Cinzel,Georgia,serif;font-size:13px;letter-spacing:.35em;color:#a8867a}
+.studio b{color:var(--gold)}
+#aiNote,#titleMusicStatus{font-size:15px;color:#e6bda8;margin:4px 0 0;min-height:20px}
+@media(max-width:700px){#title{justify-content:center;background-position:35% center;padding:16px}.titleCard{padding:22px}}
+
+/* ---------- Creator ---------- */
+#creator{position:fixed;inset:0;overflow:auto;padding:18px;z-index:6;background:linear-gradient(rgba(14,11,18,.9),rgba(14,11,18,.97)),url('art/cover.jpg') center/cover}
+.crWrap{max-width:1060px;margin:0 auto}
+.crWrap h2{color:var(--gold2);margin:4px 0 2px}
+.crGrid{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;margin-top:12px}
+.box{background:rgba(25,20,29,.92);border:1px solid #47313e;border-radius:10px;padding:14px}
+.box h3{margin:0 0 8px;color:var(--rose);font-size:16px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.card{text-align:left;background:#140f18;border:1px solid #47313e;border-radius:8px;padding:9px 10px;line-height:1.25}
+.card b{display:block;font-family:Cinzel,Georgia,serif;font-size:14.5px;color:#f1c4a6}
+.card small{color:#bba9b3;font-size:14px}
+.card.sel{border-color:#f0c5a7;background:#341c2a;box-shadow:0 0 0 1px #f0c5a7 inset}
+.abilRow{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.abil{background:#140f18;border:1px solid #47313e;border-radius:8px;padding:6px 2px;text-align:center}
+.abil.sel{border-color:#8fa8e0;box-shadow:0 0 0 2px #8fa8e0 inset}
+.abil .k{font-family:Cinzel,Georgia,serif;font-size:12px;color:var(--muted)}
+.abil .v{font-size:24px;font-weight:600;color:#fff;line-height:1.1}
+.abil .m{font-size:14px;color:var(--gold)}
+.preview{font-size:16px;line-height:1.45}
+.preview .tag{display:inline-block;background:#341c2a;border:1px solid #74566a;border-radius:20px;padding:0 8px;margin:2px 2px 0 0;font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
+/* ---------- Game ---------- */
+#game{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr}
+.topbar{display:flex;align-items:center;gap:10px;padding:8px 12px;background:#211622;border-bottom:1px solid #6e4055}
+.topbar .ttl{font-family:Cinzel,Georgia,serif;color:var(--rose);font-size:15px;white-space:nowrap}
+.topbar .time{color:var(--muted);font-size:14px;white-space:nowrap}
+.bells{display:flex;gap:2px;font-size:14px}
+.bells span{opacity:.25;filter:grayscale(1)}
+.bells span.on{opacity:1;filter:none}
+.hpMini{flex:0 0 130px;height:16px;background:#3a1512;border:1px solid #7a3a3a;border-radius:8px;overflow:hidden;position:relative}
+.hpMini i{position:absolute;inset:0 auto 0 0;background:linear-gradient(#d0584a,#8f251c);transition:width .4s}
+.hpMini span{position:absolute;inset:0;text-align:center;font-size:12px;line-height:14px;color:#fff;font-weight:600;text-shadow:0 1px 2px #000}
+.spacer{flex:1}
+.gmBadge{font-size:13px;border:1px solid #74566a;border-radius:20px;padding:2px 10px;color:#ddc6cf;white-space:nowrap}
+.gmBadge.ai{border-color:#8fa8e0;color:#d6e2fb;background:rgba(143,168,224,.14)}
+.body{display:grid;grid-template-columns:1fr 370px;min-height:0}
+.main{display:flex;flex-direction:column;min-height:0;padding:12px;gap:8px}
+#scene{display:flex;gap:12px;align-items:stretch;background:#19141d;border:1px solid #6e4a51;border-radius:8px;overflow:hidden;min-height:96px}
+#sceneImg{flex:0 0 118px;background:#2e182b center/cover no-repeat;box-shadow:inset -14px 0 20px -8px #19141d}
+#sceneTxt{padding:9px 12px 9px 0;display:flex;flex-direction:column;justify-content:center;min-width:0}
+#sceneTxt h2{margin:0;color:#f0d7ba;font-size:20px;text-shadow:0 2px 8px #000}
+#sceneTxt p{margin:2px 0 0;color:#ccbdc4;font-size:15px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#log{flex:1;overflow-y:auto;background:linear-gradient(var(--parch),var(--parch2));color:var(--ink);border-radius:8px;padding:18px 22px;box-shadow:inset 0 0 55px rgba(90,40,40,.35),0 4px 20px #000;border:1px solid #9a7468}
+.e{margin:0 0 12px;white-space:pre-wrap;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.e.gm{font-size:19px}
+.e.gm .q{color:#6b1f2e;font-style:italic}
+.e.gm b{color:#4a1424}
+.e.you{color:#34476b;font-style:italic;border-left:3px solid #8aa1c0;padding-left:10px}
+.e.you::before{content:"› "}
+.e.roll{font-family:ui-monospace,Menlo,monospace;font-size:14.5px;background:rgba(80,30,40,.08);border:1px dashed #a07a78;border-radius:6px;padding:5px 9px;color:#4b2526}
+.e.roll .ok{color:#2f6a2a;font-weight:700}.e.roll .no{color:#9c2a22;font-weight:700}
+.e.sys{font-size:15px;color:#6b4d56;text-align:center;font-style:italic}
+.e.loot{font-size:15.5px;color:#2f5d26;text-align:center;font-weight:600}
+.e.clue{font-size:16.5px;background:rgba(255,248,230,.6);border:1px solid #b08a5a;border-left:5px solid #8b2c3c;border-radius:6px;padding:8px 11px;color:#3a1f12}
+.e.bell{text-align:center;font-family:Cinzel,Georgia,serif;color:#7a1626;font-size:17px;letter-spacing:.06em}
+.e.hurt{font-size:15.5px;color:#9c2a22;text-align:center;font-weight:600}
+.e.combat{color:#5a1a1f;font-size:17px}
+.e.place{text-align:center;margin:18px 0 8px}
+.e.place h3{margin:0;color:#4a1b2a;font-size:21px}
+.e.place hr{border:0;border-top:1px solid #a07a78;width:50%;margin:4px auto}
+.thinking{color:#6b4d56;font-style:italic;font-size:16px}
+.thinking i{display:inline-block;animation:quill 1s infinite alternate}
+@keyframes quill{to{transform:rotate(-14deg) translateY(-2px)}}
+#suggest{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:#251925;border:1px solid #80586a;border-radius:18px;padding:3px 12px;font-size:15.5px;color:#f4e0d0}
+.chip:hover{border-color:#f0c5a7;background:#3a2232}
+#combatBar{background:linear-gradient(#3b141c,#220b10);border:1px solid #9c3a4a;border-radius:8px;padding:8px}
+#combatBar .foes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.foe{flex:1 1 140px;background:#1a0a0e;border:1px solid #6e2f34;border-radius:6px;padding:4px 8px;text-align:left;font-size:15px}
+.foe.tgt{border-color:#ffb08a;box-shadow:0 0 0 1px #ffb08a inset}
+.foe.dead{opacity:.35;text-decoration:line-through}
+.foe .bar{height:6px;background:#3a1512;border-radius:3px;overflow:hidden;margin-top:3px}
+.foe .bar i{display:block;height:100%;background:#d0584a}
+#combatBar .acts{display:flex;gap:6px;flex-wrap:wrap}
+form#cmd{display:flex;gap:8px}
+form#cmd input{flex:1;min-width:0;font-size:18px;padding:11px 13px}
+.quick{display:flex;gap:6px;flex-wrap:wrap}
+.side{border-left:1px solid #47313e;background:rgba(25,20,29,.95);display:flex;flex-direction:column;min-height:0}
+.tabs{display:flex;border-bottom:1px solid #47313e}
+.tabs button{flex:1;background:none;border:0;padding:9px 2px;font-family:Cinzel,Georgia,serif;font-size:12.5px;color:#bba9b3;border-bottom:2px solid transparent}
+.tabs button.on{color:var(--rose);border-bottom-color:var(--rose)}
+.panel{flex:1;overflow:auto;padding:12px 14px;font-size:16.5px}
+.panel h4{font-family:Cinzel,Georgia,serif;color:var(--rose);margin:14px 0 6px;font-size:14px;letter-spacing:.08em}
+.panel h4:first-child{margin-top:0}
+.sheetHead b{font-family:Cinzel,Georgia,serif;font-size:19px;color:#f1c4a6}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0}
+.stat{background:#100e14;border:1px solid #47313e;border-radius:8px;text-align:center;padding:4px}
+.stat .k{font-size:11px;color:var(--muted);font-family:Cinzel,Georgia,serif}
+.stat .v{font-size:20px;color:#fff;font-weight:600}
+.skills{columns:2;font-size:14.5px;column-gap:10px}
+.skills div{break-inside:avoid;display:flex;justify-content:space-between;border-bottom:1px dotted #47313e}
+.skills div.p{color:#f1c4a6}
+.item{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:5px 0;border-bottom:1px dotted #47313e}
+.item small{display:block;color:#a8949e;font-size:13.5px;line-height:1.2}
+.quest{border:1px solid #47313e;border-radius:7px;padding:7px 9px;margin-bottom:7px;background:#140f18}
+.quest.done{opacity:.55}
+.quest b{color:#f1c4a6}
+.ev{border:1px solid #6e4a51;border-left:4px solid #8b2c3c;border-radius:6px;padding:7px 9px;margin-bottom:7px;background:#1b1219;font-size:15px}
+.ev .link{color:#f6c08a;font-weight:600}
+.ev.explained{opacity:.55;border-left-color:#5a6a7a}
+.stmt{border:1px solid #47313e;border-radius:6px;padding:7px 9px;margin-bottom:7px;background:#140f18;font-size:15px}
+.stmt.broken{border-color:#8b2c3c}
+.stmt select{width:100%;margin:5px 0;font-size:14px;padding:5px}
+.move{font-size:14.5px;color:#e7a6a6;border-left:3px solid #8b2c3c;padding:3px 8px;margin-bottom:5px}
+.opt{display:block;width:100%;text-align:left;margin:5px 0;font-size:15.5px}
+.opt.sel{border-color:#f0c5a7;background:#4a2533}
+.sus{display:grid;grid-template-columns:1fr auto;gap:4px 8px;align-items:center;border-bottom:1px dotted #47313e;padding:6px 0}
+.sus b{color:#f1c4a6}
+.sus small{color:#a8949e;display:block;font-size:13.5px}
+.pips{color:#f6c08a;letter-spacing:2px}
+.bellRow{font-size:24px;letter-spacing:4px;text-align:center}
+.bellRow span{opacity:.22;filter:grayscale(1)}
+.bellRow span.on{opacity:1;filter:none}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.tile{position:relative;border:1px solid #6e4a51;border-radius:7px;overflow:hidden;aspect-ratio:1/1;background:#2e182b center/cover;padding:0;text-align:left}
+.tile span{position:absolute;left:0;right:0;bottom:0;padding:14px 5px 4px;font-size:12.5px;line-height:1.1;background:linear-gradient(transparent,rgba(10,6,12,.92));color:#f6e3cf;font-family:Cinzel,Georgia,serif}
+.tile.here{border-color:#f0c5a7;box-shadow:0 0 0 2px #f0c5a7}
+.tile.reach{border-color:#9fb6e8}
+.tile:disabled{opacity:.5;cursor:default}
+.tile.here:disabled{opacity:1}
+.dicebox{display:flex;gap:5px;flex-wrap:wrap}
+.npc{border-bottom:1px dotted #47313e;padding:5px 0;font-size:15px}
+.npc b{color:#f1c4a6}
+.att{font-size:12px;padding:0 6px;border-radius:10px;margin-left:4px}
+/* ---------- Modals ---------- */
+.modal{position:fixed;inset:0;background:rgba(6,4,8,.8);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;backdrop-filter:blur(2px)}
+.mbox{width:min(500px,100%);max-height:92vh;overflow:auto;background:linear-gradient(135deg,#201522,#0b0a11);border:1px solid #a8785a;border-radius:10px;padding:20px;box-shadow:0 0 50px #000}
+.mbox h2{margin:0 0 6px;color:#f0c5a7;font-size:22px}
+.mbox h3{color:var(--rose);font-size:16px;margin:16px 0 4px}
+.mbox label{display:block;margin:10px 0 4px;color:#dccbc4;font-size:16px}
+.mbox select,.mbox textarea{width:100%}
+#diceModal .mbox{text-align:center}
+.diceRow{display:flex;justify-content:center;gap:16px;margin:12px 0}
+.d20{width:150px;height:150px;position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.d20 svg.shape{position:absolute;inset:0;width:100%;height:100%}
+.d20 .num{position:absolute;left:0;right:0;top:50%;transform:translateY(-38%);font:700 46px Cinzel,Georgia,serif;color:#fff6df;text-shadow:0 2px 6px #000;pointer-events:none}
+.d20.rolling svg.shape{animation:spin .9s cubic-bezier(.2,.7,.3,1)}
+@keyframes spin{0%{transform:rotate(0) scale(1)}40%{transform:rotate(380deg) scale(1.12)}100%{transform:rotate(720deg) scale(1)}}
+.d20.dim{opacity:.4}
+.d20.crit .num{color:#ffe27a;text-shadow:0 0 18px #ffbf3a}
+.d20.fumble .num{color:#ff8d7a}
+#diceResult{min-height:58px;font-size:19px}
+#diceResult .big{font-family:Cinzel,Georgia,serif;font-size:26px;display:block}
+.succ{color:#9bd88a}.fail{color:#ff8d7a}
+#diceHint{color:#c9b0a8;font-size:15px}
+@media (max-width:880px){
+ body{font-size:17px}
+ .body{grid-template-columns:1fr}
+ .side{position:fixed;left:0;right:0;bottom:0;top:52px;z-index:20;transform:translateY(105%);transition:transform .25s;border:0;border-top:1px solid #a8785a}
+ .side.open{transform:none}
+ .crGrid{grid-template-columns:1fr}
+ .hpMini{flex-basis:96px}
+ .topbar .time,.topbar .ttl,.gmBadge{display:none}
+ .side{background:#19141d}
+ .bells{font-size:12px;gap:0}
+ #log{padding:14px 15px}
+ .e.gm{font-size:18px}
+ .abilRow{grid-template-columns:repeat(3,1fr)}
+ #sceneImg{flex-basis:92px}
+ #scene{min-height:84px}
+}
+@media (min-width:881px){ #sideToggle,#sideClose{display:none} }
+</style>
+</head>
+<body>
+
+<!-- ============ TITLE ============ -->
+<div id="title">
+ <canvas id="embers"></canvas>
+ <section class="titleCard">
+  <h1>THE BLACK<br>TESTAMENT</h1>
+  <p class="sub">A dark fantasy investigation RPG · d20 rules · living Game Master</p>
+  <button class="btn gold menuBtn" id="tNew">New Investigation</button>
+  <button class="btn menuBtn" id="tContinue">Continue Investigation</button>
+  <button class="btn menuBtn" id="tOptions">Options</button>
+  <button class="btn menuBtn" id="tHow">How to Play</button>
+  <button class="btn menuBtn" id="tMusic" type="button">♫ Play Music</button>
+  <p id="titleMusicStatus" aria-live="polite">Tap Play Music to enable audio (needed on iPhone).</p>
+  <p id="aiNote">Checking for the AI Game Master…</p>
+  <div class="tagline">One investigator. Seven bells. An ancient evil.</div>
+  <div class="studio"><b>DAZ</b> media</div>
+ </section>
+</div>
+
+<!-- ============ CREATOR ============ -->
+<div id="creator" class="hidden">
+ <div class="crWrap">
+  <div class="row" style="justify-content:space-between"><h2>The Investigator</h2><button class="btn small" id="crBack">← Back</button></div>
+  <div class="crGrid">
+   <div>
+    <div class="box"><h3>Name</h3><div class="row"><input id="crName" maxlength="24" placeholder="Your investigator's name" style="flex:1"><button class="btn small" id="crRandName">🎲 Random</button></div></div>
+    <div class="box" style="margin-top:12px"><h3>Discipline</h3><div class="cards" id="crClasses"></div></div>
+    <div class="box" style="margin-top:12px"><h3>Ancestry</h3><div class="cards" id="crRaces"></div></div>
+    <div class="box" style="margin-top:12px"><h3>Background</h3><div class="cards" id="crBgs"></div></div>
+   </div>
+   <div>
+    <div class="box"><h3>Ability Scores</h3>
+     <div class="abilRow" id="crAbil"></div>
+     <p style="font-size:14.5px;color:#bba9b3;margin:8px 0">Tap two scores to swap them. Ancestry bonuses are included.</p>
+     <div class="row"><button class="btn small" id="crArray">Standard Array</button><button class="btn small" id="crRoll">🎲 Roll 4d6 (drop lowest)</button></div>
+    </div>
+    <div class="box preview" style="margin-top:12px" id="crPreview"></div>
+    <button class="btn gold menuBtn" id="crStart" style="margin-top:12px">Open the Case</button>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- ============ GAME ============ -->
+<div id="game" class="hidden">
+ <div class="topbar">
+  <button class="btn small" id="menuBtn" title="Menu">☰</button>
+  <span class="ttl">The Black Testament</span>
+  <div class="bells" id="topBells" title="Bells tolled — at seven, the rite completes"></div>
+  <div class="time" id="topTime"></div>
+  <div class="spacer"></div>
+  <button class="btn small" id="musicQuick" title="Music">♫</button>
+  <span class="gmBadge" id="gmBadge">Classic GM</span>
+  <div class="hpMini" title="Hit points"><i id="hpFill"></i><span id="hpText"></span></div>
+  <button class="btn small" id="sideToggle">📜</button>
+ </div>
+ <div class="body">
+  <div class="main">
+   <div id="scene"><div id="sceneImg"></div><div id="sceneTxt"><h2 id="sceneName"></h2><p id="sceneDesc"></p></div></div>
+   <div id="log" aria-live="polite"></div>
+   <div id="combatBar" class="hidden"><div class="foes" id="foes"></div><div class="acts" id="combatActs"></div></div>
+   <div id="suggest"></div>
+   <form id="cmd" autocomplete="off"><input id="cmdIn" placeholder="Describe anything you attempt…" aria-label="Your action"><button class="btn gold" id="cmdGo">Act</button></form>
+   <div class="quick" id="quick">
+    <button class="btn small" data-a="look around">👁 Look</button>
+    <button class="btn small" data-a="investigate the scene">🔍 Investigate</button>
+    <button class="btn small" data-a="cast reveal to sense hidden magic">✦ Cast Reveal</button>
+    <button class="btn small" id="caseBtn">🗂 Case Board</button>
+    <button class="btn small" data-a="take a short rest">⛺ Short rest</button>
+    <button class="btn small" id="oocBtn" title="Ask the GM a question without acting">❔ Ask GM</button>
+   </div>
+  </div>
+  <aside class="side" id="side">
+   <div class="tabs" id="tabs">
+    <button data-t="case" class="on">Case</button><button data-t="sheet">Sheet</button><button data-t="bag">Bag</button><button data-t="map">Map</button><button data-t="journal">Journal</button><button id="sideClose" style="flex:0 0 40px">✕</button>
+   </div>
+   <div class="panel" id="panel"></div>
+  </aside>
+ </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div id="diceModal" class="modal hidden"><div class="mbox">
+ <h2 id="diceTitle">Ability Check</h2>
+ <div id="diceSub" style="color:#dccbc4"></div>
+ <div class="diceRow" id="diceRow"></div>
+ <div id="diceHint">Tap the die to roll</div>
+ <div id="diceResult"></div>
+ <button class="btn gold" id="diceOk" style="min-width:160px;margin-top:6px">Roll</button>
+</div></div>
+
+<div id="optModal" class="modal hidden"><div class="mbox">
+ <h2>Options</h2>
+ <h3>Game Master</h3>
+ <select id="oMode"><option value="ai">AI Game Master (Claude)</option><option value="offline">Classic Game Master (offline rules engine)</option></select>
+ <div id="oModeNote" style="font-size:14.5px;color:#bba9b3;margin-top:4px"></div>
+ <label>Story tone</label>
+ <select id="oTone"><option>Gothic noir mystery</option><option>Grim and gritty horror</option><option>Pulp occult adventure</option><option>Wry and darkly witty</option></select>
+ <label>Narration length</label>
+ <select id="oLen"><option value="short">Short</option><option value="medium">Medium</option><option value="long">Long and atmospheric</option></select>
+ <label>Difficulty</label>
+ <select id="oDiff"><option>Easy</option><option>Normal</option><option>Hard</option></select>
+ <label>Text speed</label>
+ <select id="oSpeed"><option value="0">Instant</option><option value="6">Fast</option><option value="14">Normal</option><option value="28">Slow</option></select>
+ <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="oAuto"> Auto-roll dice (skip tapping)</label>
+ <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="oSound"> Dice sounds</label>
+ <h3>♫ Soundtrack — 120 original loops</h3>
+ <div class="row"><button class="btn small" id="mPlay">▶ Play</button><button class="btn small" id="mPrev">⏮ Previous</button><button class="btn small" id="mNext">Next ⏭</button></div>
+ <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="mAuto"> Change music automatically by area and combat</label>
+ <label>Song</label><select id="mTrack"></select>
+ <label>Volume</label><input type="range" id="mVol" min="0" max="100" step="1">
+ <p id="mNow" style="font-size:15px;color:#e6bda8;min-height:22px;margin:6px 0 0"></p>
+ <div class="row" style="margin-top:14px"><button class="btn gold" id="oClose">Done</button></div>
+</div></div>
+
+<div id="menuModal" class="modal hidden"><div class="mbox">
+ <h2>Menu</h2>
+ <button class="btn menuBtn" id="mResume">Resume</button>
+ <button class="btn menuBtn" id="mSave">Save Game</button>
+ <button class="btn menuBtn" id="mOptions">Options & Music</button>
+ <button class="btn menuBtn" id="mExport">Export / Import Save</button>
+ <button class="btn menuBtn" id="mHelp">How to Play</button>
+ <button class="btn menuBtn danger" id="mTitle">Return to Title</button>
+ <p id="mStatus" style="text-align:center;color:#e6bda8;min-height:24px"></p>
+</div></div>
+
+<div id="ioModal" class="modal hidden"><div class="mbox">
+ <h2>Export / Import</h2>
+ <p style="font-size:15px;color:#bba9b3;margin:0">Copy this code to back up your investigation, or paste a saved code and press Load.</p>
+ <textarea id="ioText" rows="7" style="font-size:12px;font-family:monospace"></textarea>
+ <div class="row" style="margin-top:10px"><button class="btn" id="ioCopy">Copy</button><button class="btn" id="ioLoad">Load Pasted Save</button><button class="btn gold" id="ioClose">Close</button></div>
+ <p id="ioStatus" style="color:#e6bda8;min-height:22px"></p>
+</div></div>
+
+<div id="helpModal" class="modal hidden"><div class="mbox">
+ <h2>How to Play</h2>
+ <div style="font-size:16px;line-height:1.5">
+ <p><b>The case:</b> the Order of the Broken Halo is ringing Vesperhollow's old bells toward a rite. One of five suspects leads them. Every dawn another bell tolls — at <b>seven bells</b> the rite completes and the final confrontation grows far deadlier.</p>
+ <p><b>Investigate:</b> type anything — “examine the bell ropes”, “press Pike for names”, “read Madame Vale’s face while she lies”. The Game Master calls for d20 checks: roll + modifier vs a Difficulty Class.</p>
+ <p><b>Evidence & deduction:</b> clues go to the <b>Case</b> board. <b>Analyze</b> each one to learn which suspect it points to. With three analyzed pieces against the same suspect you can <b>Accuse</b> — and end this.</p>
+ <p><b>Catch them lying:</b> ask suspects for their alibi. If a piece of evidence contradicts it, present it to them in person. An innocent’s lie hides a private secret (that evidence stops counting against them); the culprit’s slip reveals their <b>motive</b>.</p>
+ <p><b>The Order fights back:</b> from the fourth bell, the cult acts each dawn — burning crime scenes, frightening witnesses, buying informants and sending killers after you. Move fast.</p>
+ <p><b>Who, how, why:</b> to accuse, you name the culprit, the method and the motive. A complete case weakens the final foe and unlocks the best ending.</p>
+ <p><b>Combat:</b> attack, cast, use your discipline’s powers, drink tonics, dodge, flee — or snap the <b>Enchanted Shackles</b> on a wounded cultist and interrogate them for a lead.</p>
+ <p><b>AI Game Master:</b> when available, Claude runs the city: suspects lie, witnesses remember you, and new places appear. The rules engine enforces dice, HP and evidence, so the story can’t cheat. Start a message with <b>?</b> to ask the GM a question.</p>
+ <p><b>Music:</b> 120 original loops that follow you through the city. Turn them on from the title screen or the ♫ button.</p>
+ </div>
+ <button class="btn gold" id="helpClose">Understood</button>
+</div></div>
+
+<div id="accModal" class="modal hidden"><div class="mbox">
+ <h2>The Accusation</h2>
+ <p id="accWho" style="margin:0 0 6px"></p>
+ <h3>How were the bells rung?</h3><div id="accHow"></div>
+ <h3>Why?</h3><div id="accWhy"></div>
+ <p style="font-size:14px;color:#a8949e">A complete case (who, how and why) gives the culprit no room to prepare — and earns the best endings. Clues to the method come from analysis; motives from breaking a suspect’s lie.</p>
+ <div class="row" style="margin-top:10px"><button class="btn gold" id="accGo" disabled>Make the Accusation</button><button class="btn" id="accCancel">Not yet</button></div>
+</div></div>
+
+<div id="endModal" class="modal hidden"><div class="mbox" style="text-align:center">
+ <h2 id="endTitle">You Have Fallen</h2>
+ <p id="endText"></p>
+ <div class="row" style="justify-content:center"><button class="btn gold" id="endA">Load Last Save</button><button class="btn hidden" id="endC">Load Last Save</button><button class="btn" id="endB">Return to Title</button></div>
+</div></div>
+
+<script>
+'use strict';
+/* =========================================================
+   CORE HELPERS
+========================================================= */
+const $=q=>document.querySelector(q), $$=q=>[...document.querySelectorAll(q)];
+const SAVE_KEY='black-testament-d20-save-v1', SET_KEY='black-testament-d20-settings-v1';
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}};
+let settings=Object.assign({mode:'ai',speed:14,autoRoll:false,tone:'Gothic noir mystery',length:'medium',difficulty:'Normal',sound:true},store.get(SET_KEY)||{});
+const rnd=n=>Math.floor(Math.random()*n)+1;
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const mod=v=>Math.floor((v-10)/2);
+const sgn=n=>n>=0?'+'+n:''+n;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function rollExpr(expr,crit=false){
+ const m=/^(\d+)d(\d+)([+-]\d+)?$/i.exec(String(expr).replace(/\s/g,''));
+ if(!m){const n=parseInt(expr)||0;return {total:n,text:String(n)}}
+ const n=+m[1]*(crit?2:1),sides=+m[2],b=+(m[3]||0),rolls=[];
+ for(let i=0;i<n;i++)rolls.push(rnd(sides));
+ const total=Math.max(1,rolls.reduce((a,c)=>a+c,0)+b);
+ return {total,rolls,text:`${n}d${sides}${b?sgn(b):''}: [${rolls.join(', ')}]${b?' '+sgn(b):''} = ${total}`};
+}
+function addMod(expr,m){const x=/^(\d+d\d+)([+-]\d+)?$/.exec(expr);if(!x)return expr;const b=(+(x[2]||0))+m;return x[1]+(b?sgn(b):'')}
+
+/* =========================================================
+   RULES DATA
+========================================================= */
+const ABIL=['STR','DEX','CON','INT','WIS','CHA'];
+const ABIL_NAME={STR:'Strength',DEX:'Dexterity',CON:'Constitution',INT:'Intelligence',WIS:'Wisdom',CHA:'Charisma'};
+const SKILLS={Athletics:'STR',Acrobatics:'DEX','Sleight of Hand':'DEX',Stealth:'DEX',Arcana:'INT',History:'INT',Investigation:'INT',Nature:'INT',Religion:'INT','Animal Handling':'WIS',Insight:'WIS',Medicine:'WIS',Perception:'WIS',Survival:'WIS',Deception:'CHA',Intimidation:'CHA',Performance:'CHA',Persuasion:'CHA'};
+const RACES={
+ Human:{bonus:{STR:1,DEX:1,CON:1,INT:1,WIS:1,CHA:1},trait:'Versatile — +1 to every ability.'},
+ Elf:{bonus:{DEX:2,INT:1},skills:['Perception'],trait:'Keen Senses — trained in Perception.'},
+ Dwarf:{bonus:{CON:2,WIS:1},hp:1,trait:'Dwarven Toughness — +1 max HP per level.'},
+ Halfling:{bonus:{DEX:2,CHA:1},lucky:true,trait:'Lucky — reroll a natural 1 on any d20 once.'},
+ Tiefling:{bonus:{CHA:2,INT:1},trait:'Infernal Legacy — the Order’s wards prickle against your skin; cultists hate you on sight.'},
+ 'Half-Orc':{bonus:{STR:2,CON:1},relentless:true,skills:['Intimidation'],trait:'Relentless — once per long rest, drop to 1 HP instead of 0.'}
+};
+const CLASSES={
+ 'Warlock Investigator':{hd:8,prio:['CHA','DEX','CON','WIS','INT','STR'],skills:['Investigation','Arcana'],weapon:{name:'Silver-Tipped Cane',dmg:'1d6',abil:'DEX'},ac:c=>12+mod(c.abil.DEX),acNote:'Warded greatcoat',caster:'CHA',
+  desc:'The Crown’s former occult investigator. Eldritch Blast and a Hex that never lets go. Pact magic returns on a short rest.',cantrip:{name:'Eldritch Blast',dmg:'1d10',kind:'attack'},spell:{name:'Hex',kind:'mark',dmg:'1d6',desc:'Curse a foe for this fight: your hits deal +1d6.'},pact:true},
+ Inquisitor:{hd:10,prio:['STR','CON','WIS','DEX','CHA','INT'],skills:['Athletics','Insight'],weapon:{name:'Witch-Hunter’s Sabre',dmg:'1d8',abil:'STR'},ac:c=>16,acNote:'Brigandine & buckler',
+  desc:'A blade of the Watch’s old Inquisition. Hardy, relentless; Second Wind heals you mid-fight.',feature:{id:'secondWind',name:'Second Wind',rest:'short',max:1,desc:'Heal 1d10 + level, then attack.'}},
+ 'Shadow Detective':{hd:8,prio:['DEX','WIS','CON','INT','CHA','STR'],skills:['Stealth','Sleight of Hand','Perception','Investigation'],weapon:{name:'Stiletto',dmg:'1d6',abil:'DEX'},ac:c=>11+mod(c.abil.DEX),acNote:'Leather longcoat',
+  desc:'Footsteps in the fog. Sneak Attack and Cunning Action: Hide.',feature:{id:'hide',name:'Cunning Action: Hide',rest:null,desc:'Stealth check; success grants advantage and Sneak Attack on your next attack.'}},
+ 'Occult Scholar':{hd:6,prio:['INT','CON','DEX','WIS','CHA','STR'],skills:['Arcana','History','Investigation'],weapon:{name:'Ritual Dagger',dmg:'1d4',abil:'DEX'},ac:c=>10+mod(c.abil.DEX),acNote:'Scholar’s robes',caster:'INT',
+  desc:'Knows the Testament’s grammar of ruin. Arcane Bolt at will; Sigil Darts never miss.',cantrip:{name:'Arcane Bolt',dmg:'1d10',kind:'attack'},spell:{name:'Sigil Darts',kind:'auto',dmg:'3d4+3',desc:'Three burning sigils that never miss (3d4+3).'}},
+ 'Grave Chaplain':{hd:8,prio:['WIS','CON','STR','CHA','INT','DEX'],skills:['Religion','Medicine','Insight'],weapon:{name:'Bell-Mace',dmg:'1d6',abil:'STR'},ac:c=>16+Math.min(2,mod(c.abil.DEX)),acNote:'Mail & grave-shield',caster:'WIS',
+  desc:'Keeper of the honest dead. Sacred Flame burns the unholy; Cure Wounds mends.',cantrip:{name:'Sacred Flame',dmg:'1d8',kind:'save'},spell:{name:'Cure Wounds',kind:'heal',dmg:'1d8',desc:'Heal 1d8 + Wisdom modifier.'}},
+ 'Silver-Tongue':{hd:8,prio:['CHA','DEX','CON','WIS','INT','STR'],skills:['Persuasion','Deception','Insight','Performance'],weapon:{name:'Rapier',dmg:'1d8',abil:'DEX'},ac:c=>11+mod(c.abil.DEX),acNote:'Fine coat',caster:'CHA',
+  desc:'Interrogator and charmer. Vicious Mockery wounds; Healing Word mends.',cantrip:{name:'Vicious Mockery',dmg:'1d4',kind:'save',debuff:true},spell:{name:'Healing Word',kind:'heal',dmg:'1d4',desc:'Heal 1d4 + Charisma modifier.'}}
+};
+const BACKGROUNDS={
+ 'Former Crown Investigator':{skills:['Investigation','Insight'],desc:'You resigned when they buried the truth about the Broken Halo.',item:'Detective badge'},
+ 'Watch Veteran':{skills:['Athletics','Intimidation'],desc:'Twenty years walking Vesperhollow’s night patrol.',item:'Watch lantern'},
+ 'Defrocked Priest':{skills:['Religion','Insight'],desc:'You asked the cathedral one question too many.',item:'Cracked holy symbol'},
+ 'Archive Scholar':{skills:['History','Arcana'],desc:'You catalogued forbidden books for a living.',item:'Annotated lexicon'},
+ 'Street Urchin':{skills:['Stealth','Sleight of Hand'],desc:'Raven’s Hollow raised you. It still knows your name.',item:'Lockpicks'},
+ 'Stage Performer':{skills:['Performance','Deception'],desc:'The Bloodmoon Theater once billed you above the curtain.',item:'Theatrical mask'}
+};
+const ITEMS={
+ 'Healing Tonic':{type:'potion',heal:'2d4+2',price:25,desc:'Restores 2d4+2 HP.'},
+ 'Greater Tonic':{type:'potion',heal:'4d4+4',price:70,desc:'Restores 4d4+4 HP.'},
+ 'Warding Talisman':{type:'ward',ac:1,price:30,desc:'+1 AC while carried.'},
+ 'Silvered Edge':{type:'oil',price:40,desc:'Silver your weapon: +1 to hit and damage, permanently.'},
+ 'Salt & Chalk':{type:'gear',price:2,desc:'For circles, wards and marking your way.'},
+ 'Candle-Lantern':{type:'gear',price:3,desc:'Steady light in the catacombs.'},
+ 'Runic grimoire':{type:'gear',desc:'Your old grimoire, thick with ward-diagrams and margin notes.'},
+ 'Detective badge':{type:'gear',desc:'Out of date. People still flinch at it.'},
+ 'Enchanted shackles':{type:'gear',desc:'In combat: Bind a badly wounded foe to capture and interrogate them.'}
+};
+const SHOPS={apothecary:{keeper:'Mother Gale',items:['Healing Tonic','Greater Tonic','Warding Talisman','Silvered Edge','Salt & Chalk','Candle-Lantern']},tavern:{keeper:'Old Marta',items:['Healing Tonic'],room:5}};
+const XP_LEVELS=[0,300,900,2700,6500,14000,23000,34000,48000,64000];
+const MONSTERS={
+ rat:{name:'Sewer Rat Swarm',hp:9,ac:11,atk:3,dmg:'2d4',xp:25},
+ cutpurse:{name:'Cutpurse',hp:9,ac:12,atk:3,dmg:'1d6+1',xp:25},
+ cultist:{name:'Halo Cultist',hp:9,ac:12,atk:3,dmg:'1d6+1',xp:25},
+ fanatic:{name:'Cult Fanatic',hp:18,ac:13,atk:4,dmg:'1d8+2',xp:100},
+ ghoul:{name:'Grave Ghoul',hp:16,ac:12,atk:4,dmg:'2d4+2',xp:100},
+ skeleton:{name:'Catacomb Skeleton',hp:13,ac:13,atk:4,dmg:'1d6+2',xp:50},
+ wraith:{name:'Alley Wraith',hp:16,ac:12,atk:4,dmg:'2d6',xp:100}
+};
+
+/* =========================================================
+   THE CASE — suspects, their tells, clue sites
+========================================================= */
+const SUSPECTS={
+ varric:{name:'Brother Varric',where:'cathedral',role:'cathedral bell-warden, pious and short-tempered',boss:'Brother Varric, Voice of the Halo',
+  motive:'He believes the seventh bell will make the cathedral the true seat of power in the city again.',
+  tells:['bell-rope fibres soaked in consecrated oil — only the cathedral uses it','a ledger page of “donations” written in Brother Varric’s cramped, backward-slanting hand','black resin incense ash of the kind burned only in the cathedral’s sealed crypt chapel','a prayer bead carved with a tiny broken halo, strung on cathedral cord']},
+ vale:{name:'Madame Vale',where:'market',role:'fortune-teller and dealer in curiosities, charming and evasive',boss:'Madame Vale, the Violet Oracle',
+  motive:'She saw her own death in the cards and believes the rite will let her rewrite fate.',
+  tells:['a tarot card — the Hanged Saint — inked in violet, with a pinhole through the eyes','violet ceremonial silk thread, dyed with a market-only lichen','a perfumed letter sealed in black wax — the scent of Vale’s tent','a crystal shard that hums with scrying magic, cut to fit a fortune-teller’s orb']},
+ thorn:{name:'Constable Thorn',where:'ashen',role:'weary Watch constable who sent for you',boss:'Constable Thorn, Iron Acolyte',
+  motive:'He watched the Crown bury the Order once. He decided to rebuild it — with himself at the head.',
+  tells:['a Watch duty roster altered so that one constable was “on patrol” each murder night','a constable’s brass whistle stamped inside with a broken halo','boot prints with Watch-issue hobnails, too heavy for the victims','a requisition order for silver chain, signed with a single sharp “T.”']},
+ sable:{name:'Archivist Sable',where:'library',role:'precise, soft-spoken keeper of the City Archives',boss:'Archivist Sable, Keeper of the Testament',
+  motive:'Sable has read the Black Testament and cannot stop. The rite is the last page.',
+  tells:['a page of mirrored scripture torn from the archive’s restricted stacks','ink flecked with lapis — archive-grade, issued to one person only','a library call-slip for “the Black Testament,” stamped and signed S.','a silver key with a seven-pointed star, cut for the archive’s sealed vault']},
+ cantor:{name:'The Masked Cantor',where:'theater',role:'enigmatic singer of the Bloodmoon Theater who never removes the mask',boss:'The Masked Cantor, Bell of Ruin',
+  motive:'The Cantor’s voice was stolen by the Order decades ago. The seventh bell will give it back — at the city’s cost.',
+  tells:['a sheet of hymn music written in reverse, with the thirteenth bar circled','greasepaint smudged on the inside of a ritual mask','a theater ticket stub for row thirteen, seat seven — a row that doesn’t exist','a silver tuning fork that rings with no sound you can hear, only feel']}
+};
+const CASE_EXTRA={
+ varric:{statement:'“I was at vespers every night of the murders, then locked in my cell until dawn. The cathedral keeps its hours.”',secret:'Varric’s anger collapses. He has been sneaking out to sell cathedral relics to pay for his dying brother’s physician. That is what your evidence shows — shame, not murder.',slip:'“The cathedral was the heart of this city once. When the bells answer to it again—” Varric stops himself, white-knuckled.',method:'Rang the old bells from the cathedral crypt, binding them with consecrated rope',motiveShort:'To restore the cathedral’s power over the city'},
+ vale:{statement:'“I never leave my tent after dark. Ask anyone in the market — my lamp burns all night.”',secret:'Vale laughs, brittle. She leaves a lamp burning and slips out to run contraband for the Shadow Market. A thief, she admits — not a killer.',slip:'“The cards showed my death, investigator. Every reading, the same card. If I could just change one card—” Her veil trembles.',method:'Struck the bells from afar by scrying through a crystal orb',motiveShort:'To rewrite the fate she saw in her cards'},
+ thorn:{statement:'“I was on patrol every murder night. The duty roster proves it.”',secret:'Thorn sags. He falsified the roster to hide that he spent those nights drinking at the Mourning Bell, too afraid to walk the streets. Ashamed — but not guilty.',slip:'“The Crown buried the Order once. I stood there and watched them do it. Someone should have dug it up and done it properly—” His jaw locks shut.',method:'Used Watch patrol routes and tower keys to reach every bell unseen',motiveShort:'To rebuild the Order with himself at its head'},
+ sable:{statement:'“The archive is sealed at night. I go home at the eleventh bell. No exceptions.”',secret:'Sable flushes. They have been letting themselves into the sealed vault at night to read forbidden books. A scholar’s sin, Sable insists, not a murderer’s.',slip:'“Have you ever read a book you could not stop reading? The last page is so close—” Sable’s ink-stained fingers twitch.',method:'Woke the bells with a rite copied out of the Black Testament',motiveShort:'To reach the Testament’s final page'},
+ cantor:{statement:'“♪ I sing on the stage from the dusk to the dawn; ask any who heard me, the crowds that were drawn. ♪”',secret:'The Cantor sings a confession: an understudy took the stage those nights while the Cantor wept at the grave of an old love in the cemetery. Grief, not murder.',slip:'“♪ My voice was a bell, and they stole it away… the seventh will ring it back home to stay— ♪” The song breaks off, cracked.',method:'Sang each bell into ringing with a hymn performed backwards',motiveShort:'To win back a voice stolen long ago'}
+};
+for(const k in CASE_EXTRA)Object.assign(SUSPECTS[k],CASE_EXTRA[k]);
+const CLUE_SITES={
+ tavern:{skill:'Persuasion',dc:12,how:'In the Mourning Bell’s back room, Nell finally stops shaking long enough to tell you what she saw — and hands you what the killer dropped:'},
+ ashen:{skill:'Insight',dc:11,how:'Nell the flower-seller, still shaking, finally tells you what she saw — and what the killer dropped:'},
+ clocktower:{skill:'Investigation',dc:13,how:'Wedged deep in the clockwork beside the great bell, where no maintenance hand would reach, you find'},
+ library:{skill:'Investigation',dc:13,how:'In the restricted stacks someone has been careless. Between two volumes on bell-founding:'},
+ theater:{skill:'Stealth',dc:13,how:'You slip backstage past the dressing rooms. Hidden in a prop trunk marked “do not open”:'},
+ cemetery:{skill:'Investigation',dc:12,how:'At the newest grave the earth has been turned twice. Half-buried beside the headstone:'},
+ hollow:{skill:'Persuasion',dc:13,how:'Pike leans close, breath like cheap gin, and slides something across the table:'},
+ observatory:{skill:'Arcana',dc:14,how:'The great orrery has been set to the night of the seventh bell. Taped beneath its brass base:'},
+ sewers:{skill:'Perception',dc:13,how:'Behind a loose brick, a cult cache: candles, chalk, and'}
+};
+
+/* =========================================================
+   WORLD — Vesperhollow (art = tile from the original location sheet)
+========================================================= */
+const ART_NAMES=['Ashen Square','Blackthorn Market','Weeping Bridge','Raven’s Hollow','The Clocktower','Abandoned Asylum','The Gallows','Whispering Library','Bloodmoon Theater','The Apothecary','Forgotten Cemetery','Hollowroot Forest','Widow’s Marsh','Blackwater Lake','Bone Orchard','Moonfall Ruins','The Witch’s Cottage','Thornspire Mountains','Silent Monastery','Forgotten Village','Ashen Battlefield','The Old Sewers','Smuggler’s Tunnels','Bone Catacombs','The Crimson Vault','Drowned Prison','The Alchemist’s Lab','Shadow Market','Obsidian Mines','Forgotten Railway','The Abyssal Gateway','Crimson Citadel','The Mirror Dimension','The Soul Furnace','Fallen Cathedral','Dreaming Labyrinth','The Seven Seals','Ashen Throne','Void Observatory','The Black Testament Archive'];
+const WORLD={
+ ashen:{name:'Ashen Square',art:1,glow:'#402037',music:'Cursed City',exits:['tavern','market','clocktower','library','theater','cathedral','bridge'],npcs:['Constable Thorn','Nell'],
+  desc:'Rain hisses on the cobbles of Ashen Square. Lanterns smear gold across the puddles around the drowned-saint fountain. A Watch carriage waits with its door ajar, a flower-seller huddles under an awning, and above it all the black towers of Vesperhollow listen for the next bell.'},
+ tavern:{name:'The Mourning Bell Tavern',safe:true,glow:'#4a2a1a',music:'Sanctuary',exits:['ashen'],npcs:['Old Marta'],
+  desc:'The Mourning Bell is low-beamed and warm, its fire banked against the damp. Old Marta pours without asking. Every clock in the place has been stopped at the thirteenth hour — “so the bells can’t find us,” she says. Rooms upstairs: 5 gold.'},
+ market:{name:'Blackthorn Market',art:2,glow:'#4a2a20',music:'Cursed City',exits:['ashen','apothecary'],npcs:['Madame Vale'],
+  desc:'Blackthorn Market never quite closes. Under patched awnings, hawkers sell eel pies, saints’ knucklebones and luck by the ounce. At its heart stands a violet tent where Madame Vale reads futures for anyone with silver.'},
+ apothecary:{name:'The Apothecary',art:10,glow:'#3a2a10',music:'Sanctuary',safe:true,exits:['market'],npcs:['Mother Gale'],
+  desc:'Jars glow amber and green along crooked shelves. Mother Gale, blind in one eye and sharp in both, grinds something bitter and tells you the price before you ask.'},
+ clocktower:{name:'The Clocktower',art:5,glow:'#202a44',music:'Investigation',exits:['ashen'],
+  desc:'The old Clocktower groans as its gears turn. Ladders climb into the dark toward the great bell, its rope newly frayed — though the bell-ringer swears no one has touched it in years.'},
+ library:{name:'Whispering Library',art:8,glow:'#1e2a40',music:'Investigation',exits:['ashen'],npcs:['Archivist Sable'],
+  desc:'The City Archives breathe dust and lamp oil. Shelves vanish upward into shadow, and the books murmur faintly when no one is reading them. Archivist Sable watches from the circulation desk with ink-stained fingers folded.'},
+ theater:{name:'Bloodmoon Theater',art:9,glow:'#4a1020',music:'Mystic & Dream',exits:['ashen'],npcs:['The Masked Cantor'],
+  desc:'Red velvet, gone threadbare. The Bloodmoon Theater is dark between shows, yet a single voice rehearses somewhere above the stage — a hymn sung slightly wrong. The Masked Cantor never misses a rehearsal.'},
+ cathedral:{name:'Old Cathedral',art:35,glow:'#4a1020',music:'Mystic & Dream',exits:['ashen','cemetery'],npcs:['Brother Varric'],
+  desc:'The Old Cathedral’s stained glass bleeds red light across empty pews. Brother Varric, the bell-warden, sweeps the nave with furious care. A side door leads out to the cemetery.'},
+ cemetery:{name:'Forgotten Cemetery',art:11,glow:'#1c2a30',music:'Forbidden Wilds',wild:true,exits:['cathedral','observatory'],enc:['ghoul','skeleton','wraith'],
+  desc:'Weeping angels lean over graves no one tends. Fog pools between the stones. The three victims were buried here this week — and one of the graves looks disturbed. A path climbs toward the abandoned observatory.'},
+ observatory:{name:'Void Observatory',art:39,glow:'#20204a',music:'Mystic & Dream',wild:true,exits:['cemetery'],enc:['wraith','cultist'],
+  desc:'The abandoned observatory’s dome is cracked open to the sky. A great brass orrery still turns by itself, its planets aligned to a night that hasn’t happened yet.'},
+ bridge:{name:'Weeping Bridge',art:3,glow:'#1e2a44',music:'Cursed City',wild:true,exits:['ashen','hollow','sewers'],enc:['cutpurse','cultist'],
+  desc:'Weeping Bridge arches over the black canal, its stone saints streaked with rain like tears. Below, a sewer grate exhales warm air. Across the water, the crooked roofs of Raven’s Hollow.'},
+ hollow:{name:'Raven’s Hollow',art:4,glow:'#2a2030',music:'Cursed City',wild:true,exits:['bridge'],npcs:['Pike'],enc:['cutpurse','cultist'],
+  desc:'Raven’s Hollow leans in on itself — laundry lines, broken shutters, ravens on every gutter. Pike the informant holds court in a gin-shop doorway, selling secrets by the sentence.'},
+ sewers:{name:'The Old Sewers',art:22,glow:'#1a3020',music:'Underworld',wild:true,exits:['bridge'],enc:['rat','cultist','ghoul'],
+  desc:'The Old Sewers run warm and green-lit beneath the city. Chalk marks — broken halos — have been scrawled at every junction, pointing deeper.'},
+ catacombs:{name:'Bone Catacombs',art:24,glow:'#302018',music:'Underworld',wild:true,exits:['sewers'],enc:['skeleton','ghoul','fanatic'],
+  desc:'Skulls stacked to the ceiling, candles burning in their eye sockets. Someone has lit them recently. Far ahead, you hear chanting, and a bell struck very softly.'},
+ seals:{name:'The Seven Seals',art:37,glow:'#4a0a14',music:'Demonic Frontier',exits:['catacombs'],
+  desc:'A vast ritual chamber beneath the city. Seven seals burn red on the floor, one for each bell. At the centre, the leader of the Broken Halo turns to face you.'}
+};
+const NPCS={
+ 'Constable Thorn':{loc:'ashen',role:'weary Watch constable who sent for you',greet:'“You came. Good.” Thorn’s eyes are bloodshot. “Three dead in three nights, each marked with a broken halo — and someone ringing the old bells at the thirteenth hour. The Crown wants it quiet. I want it solved.”',
+  topics:[[/(case|murder|halo|kill|dead|victim|help|why)/,'case'],[/(suspect|who|lead)/,'suspects'],[/(bell|thirteen)/,'“Seven old bells in the city. Each night the cult rings one more. The priests say when all seven ring, something opens.”'],[/(witness|nell)/,'“Nell, the flower-seller there. She saw something on the first night and won’t say it to a uniform.”'],[/(carriage|letter)/,'“Watch carriage. Take it wherever you like — the Watch pays.”']],
+  idle:'“Find me a name I can arrest.”'},
+ 'Nell':{loc:'ashen',role:'frightened flower-seller, the first witness',greet:'Nell clutches her bucket of dying lilies. “I don’t want trouble. I already saw too much of it.”',topics:[[/(saw|see|night|what|tell|witness|happen)/,'clue']],idle:'“Please. Buy a flower or let me be.”'},
+ 'Old Marta':{loc:'tavern',role:'barkeep of the Mourning Bell, keeper of rumours',greet:'“Sit by the fire, investigator. Bells can’t find you in here.”',topics:[[/(room|rest|sleep|bed)/,'“Five gold and no bells till morning.”'],[/(rumou?r|news|gossip|heard)/,'rumor'],[/(pike)/,'“Pike sells the truth by the sentence in Raven’s Hollow. Bring coin.”']],idle:'rumor'},
+ 'Madame Vale':{loc:'market',role:'fortune-teller and dealer in curiosities',greet:'“The cards said you’d come.” Vale smiles behind her veil. “They also said you wouldn’t believe them.”',topics:[[/(card|fortune|future|read)/,'“The Tower. The Hanged Saint. Seven of Bells. Ah — that last one isn’t in the deck. Interesting.”'],[/(halo|order|cult)/,'“The Broken Halo were bankers and bishops, once. Everyone forgets who funds a cult.”']],idle:'“Silver for a reading. Questions are extra.”'},
+ 'Mother Gale':{loc:'apothecary',role:'one-eyed apothecary',greet:'“Tonics, wards, silver for your blade. Prices are as listed and so is my patience.”',topics:[[/(buy|shop|sell|tonic|ward|silver)/,'shop'],[/(halo|cult|poison)/,'“Someone’s been buying black resin in bulk. Not from me.”']],idle:'“Buy or browse. Don’t loiter.”'},
+ 'Archivist Sable':{loc:'library',role:'precise keeper of the City Archives',greet:'“Quietly, please.” Sable does not look up. “The books are listening.”',topics:[[/(testament|black)/,'“The Black Testament is a legend. If it existed, it would be in the sealed vault. The vault has no key.”'],[/(halo|order|record|history)/,'“The Order of the Broken Halo was dissolved by Crown decree two hundred years ago. Officially.”']],idle:'“The archive closes at the eleventh bell.”'},
+ 'Brother Varric':{loc:'cathedral',role:'cathedral bell-warden, pious and short-tempered',greet:'“If you’ve come to pray, kneel. If you’ve come to accuse, leave.”',topics:[[/(bell|rope|ring)/,'“Our bell has not rung out of turn. The others — the city’s old bells — are not mine to answer for.”'],[/(halo|order)/,'“A heresy. Buried. Let it rot.”']],idle:'“The cathedral is a house of rest. Rest elsewhere.”'},
+ 'The Masked Cantor':{loc:'theater',role:'masked singer of the Bloodmoon Theater',greet:'The Cantor answers only in song: “♪ Who comes in the dark to the house of the moon… asking for answers, and asking too soon? ♪”',topics:[[/(bell|hymn|sing|song)/,'“♪ Seven are the bells and seven the seals, and only the last one is the one that heals. ♪”'],[/(mask|face)/,'The Cantor tilts the mask. Behind its eyes, nothing moves.']],idle:'“♪ Hush now, hush now… ♪”'},
+ 'Pike':{loc:'hollow',role:'informant who sells secrets by the sentence',greet:'“Investigator. Long time. Truth costs ten gold — lies are free, but you’d know the difference.”',topics:[[/(pay|coin|gold|buy|tell|know|information|clue|secret)/,'clue']],idle:'“Ten gold, friend. I don’t do charity.”'}
+};
+const RUMORS=['“Somebody saw lights in the old observatory. Blue lights, turning like planets.”','“The bell-ringer at the Clocktower swears the rope moves on its own at night.”','“Pike’s been flush lately. Means someone’s been asking questions — or paying him to forget them.”','“The sewers under Weeping Bridge — folk hear chanting down there.”','“They say the Masked Cantor’s been singing at the Bloodmoon for forty years. Same voice. Same mask.”','“Constable Thorn hasn’t slept since the first body. Or so he says.”'];
+
+/* =========================================================
+   STATE
+========================================================= */
+let S=null, busy=false, sampleFn=null, aiState='checking', panelTab='case', creatorState=null;
+function pb(){return 2+Math.floor((S.char.lvl-1)/4)}
+function am(a){return mod(S.char.abil[a])}
+function cls(){return CLASSES[S.char.cls]}
+function isProf(sk){return S.char.skills.includes(sk)}
+function skillMod(sk){return am(SKILLS[sk])+(isProf(sk)?pb():0)}
+function hasItem(n){return S.char.inv.some(i=>i.name.toLowerCase()===n.toLowerCase()&&i.qty>0)}
+function calcAC(){return cls().ac(S.char)+(hasItem('Warding Talisman')?1:0)}
+function weaponAtk(){const w=cls().weapon;return am(w.abil)+pb()+(S.char.weaponBonus||0)}
+function weaponDmg(){const w=cls().weapon;return addMod(w.dmg,am(w.abil)+(S.char.weaponBonus||0))}
+function spellAtk(){return am(cls().caster)+pb()}
+function spellDC(){return 8+am(cls().caster)+pb()}
+function cantripDice(){const c=cls().cantrip;if(!c)return null;const lv=S.char.lvl;const n=lv>=11?3:lv>=5?2:1;return c.dmg.replace(/^1/,String(n))}
+function slotsMax(l){return cls().pact?(l>=2?2:1)+(l>=5?1:0):(l>=5?4:l>=3?3:2)}
+function timeName(){return ['Dawn','Morning','Afternoon','Dusk','Evening','Midnight'][Math.floor((S.turn%36)/6)]}
+function attName(v){return v>=2?'Trusting':v===1?'Warm':v===0?'Neutral':v===-1?'Wary':'Hostile'}
+function newCase(){
+ const keys=Object.keys(SUSPECTS),culprit=pick(keys);
+ const sites=shuffle(Object.keys(CLUE_SITES).filter(x=>x!=='tavern'));
+ const ctells=shuffle(SUSPECTS[culprit].tells);
+ const herrings=shuffle(keys.filter(k=>k!==culprit).map(k=>({s:k,t:pick(SUSPECTS[k].tells)})));
+ const spots={};
+ sites.forEach((site,i)=>{spots[site]=i<4?{s:culprit,t:ctells[i],found:false}:{s:herrings[i-4].s,t:herrings[i-4].t,found:false}});
+ return {culprit,spots,evidence:[],read:{},accused:false,solved:false,statements:{},moves:[],methodKnown:false,motiveKnown:false,proof:null};
+}
+function fresh(c){
+ return {v:2,char:c,loc:'ashen',prevLoc:'ashen',known:['ashen','tavern','market','clocktower','library','theater','cathedral','bridge'],locs:{},flags:{},quests:[],npcs:{},memory:[],history:[],log:[],turn:24,day:1,bells:3,combat:null,suggestions:[],bounty:null,visited:{ashen:1},secrets:{},case:newCase()};
+}
+function loc(id=S.loc){return S.locs[id]||WORLD[id]}
+function locName(id){const l=loc(id);return l?l.name:id}
+function artUrl(id){const l=loc(id);return l&&l.art?`art/loc${String(l.art).padStart(2,'0')}.jpg`:null}
+
+/* =========================================================
+   LOG / RENDER
+========================================================= */
+const logEl=$('#log');let typing=null;
+function fmt(t){return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(“[^”]*”|"[^"\n]*")/g,'<span class="q">$1</span>')}
+function addLog(k,t,opts={}){
+ const entry={k,t:String(t)};S.log.push(entry);if(S.log.length>240)S.log.splice(0,S.log.length-240);
+ drawEntry(entry,!opts.instant);
+ if(['gm','you','combat','clue'].includes(k)){S.history.push((k==='you'?'PLAYER: ':k==='combat'?'COMBAT: ':k==='clue'?'EVIDENCE: ':'GM: ')+entry.t);if(S.history.length>30)S.history.splice(0,S.history.length-30)}
+}
+function drawEntry(e,animate){
+ const d=document.createElement('div');d.className='e '+e.k;
+ if(e.k==='place'){d.innerHTML=`<hr><h3>${esc(e.t)}</h3><hr>`}
+ else if(e.k==='roll'){d.innerHTML=esc(e.t).replace(/SUCCESS|HIT|CRITICAL!?/g,m=>`<span class="ok">${m}</span>`).replace(/FAIL(URE)?|MISS/g,m=>`<span class="no">${m}</span>`)}
+ else if(e.k==='gm'&&animate&&settings.speed>0){typeInto(d,e.t)}
+ else d.innerHTML=fmt(e.t);
+ logEl.appendChild(d);logEl.scrollTop=logEl.scrollHeight;
+}
+function typeInto(el,text){
+ finishTyping();let i=0;const sp=+settings.speed;
+ typing={el,text,timer:setInterval(()=>{i+=Math.max(1,Math.round(40/sp));el.textContent=text.slice(0,i);logEl.scrollTop=logEl.scrollHeight;if(i>=text.length)finishTyping()},sp)};
+}
+function finishTyping(){if(!typing)return;clearInterval(typing.timer);typing.el.innerHTML=fmt(typing.text);typing=null;logEl.scrollTop=logEl.scrollHeight}
+logEl.addEventListener('click',finishTyping);
+function redrawLog(){logEl.innerHTML='';S.log.forEach(e=>drawEntry(e,false))}
+let thinkEl=null;
+function thinking(on,msg='The Game Master considers'){if(on){if(thinkEl)return;thinkEl=document.createElement('div');thinkEl.className='e thinking';thinkEl.innerHTML=`<i>🪶</i> ${esc(msg)}…`;logEl.appendChild(thinkEl);logEl.scrollTop=logEl.scrollHeight}else if(thinkEl){thinkEl.remove();thinkEl=null}}
+function bellsHtml(cls){let h='';for(let i=0;i<7;i++)h+=`<span class="${i<S.bells?'on':''}">🔔</span>`;return h}
+function render(){
+ if(!S)return;const c=S.char,l=loc();
+ $('#topBells').innerHTML=bellsHtml();
+ $('#topTime').textContent=`Night ${S.day} · ${timeName()}`;
+ $('#hpFill').style.width=clamp(c.hp/c.maxHp*100,0,100)+'%';
+ $('#hpText').textContent=`${c.hp} / ${c.maxHp} HP`;
+ const ai=settings.mode==='ai'&&sampleFn;
+ $('#gmBadge').textContent=ai?'✦ AI Game Master':'Classic GM';$('#gmBadge').classList.toggle('ai',!!ai);
+ $('#sceneName').textContent=l.name;$('#sceneDesc').textContent=l.desc;
+ const a=artUrl(S.loc);$('#sceneImg').style.backgroundImage=a?`url('${a}')`:'radial-gradient(circle at 50% 60%,#e0a060 0,#6b2a1a 25%,#2a1218 60%)';
+ document.body.style.setProperty('--area-glow',l.glow||'#402037');
+ renderSuggestions();renderCombat();renderPanel();Music.onScene();
+}
+function renderSuggestions(){
+ const box=$('#suggest');box.innerHTML='';if(S.combat)return;
+ (S.suggestions||[]).slice(0,4).forEach(s=>{const b=document.createElement('button');b.className='chip';b.textContent=s;b.onclick=()=>act(s);box.appendChild(b)});
+}
+function setSuggestions(list){if(Array.isArray(list)&&list.length)S.suggestions=list.filter(x=>typeof x==='string').map(x=>x.slice(0,70)).slice(0,4);else S.suggestions=offlineSuggestions()}
+function linksFor(k){return S.case.evidence.filter(e=>e.analyzed&&!e.explained&&e.s===k).length}
+function renderPanel(){
+ $$('#tabs button[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===panelTab));
+ const p=$('#panel'),c=S.char,C=cls();let h='';
+ if(panelTab==='case'){
+  const cs=S.case;
+  h+=`<h4>The Bells</h4><div class="bellRow">${bellsHtml()}</div><p style="font-size:14.5px;color:#bba9b3;margin:2px 0 0;text-align:center">${S.bells>=7?'The seventh bell has rung. The rite is complete.':`${7-S.bells} bell${7-S.bells===1?'':'s'} until the rite completes. One tolls each dawn.`}</p>`;
+  h+=`<h4>Evidence (${cs.evidence.length}/8)</h4>`;
+  if(!cs.evidence.length)h+='<p style="color:#bba9b3;font-size:15px">No evidence yet. Question witnesses, search the scenes of the crimes, and interrogate captured cultists.</p>';
+  cs.evidence.forEach((e,i)=>{h+=`<div class="ev ${e.explained?'explained':''}">${esc(e.t)}<br><small style="color:#a8949e">Found: ${esc(locName(e.where))}</small><br>${e.explained?`<span style="color:#9fb6c8">✔ Explained — ${esc(SUSPECTS[e.s].name)}’s secret, not the murders</span>`:e.analyzed?`<span class="link">➜ Points to ${esc(SUSPECTS[e.s].name)}</span>`:`<button class="btn small" data-analyze="${i}" ${S.combat?'disabled':''}>🔍 Analyze (Investigation DC 12)</button>`}</div>`});
+  const sts=Object.entries(cs.statements||{});
+  h+='<h4>Statements</h4>';
+  if(!sts.length)h+='<p style="color:#bba9b3;font-size:15px">Question suspects about the murder nights to record their alibis. Then catch them in a lie by presenting contradicting evidence.</p>';
+  sts.forEach(([k,st])=>{const s=SUSPECTS[k];const here=suspectHere(k);const evOpts=cs.evidence.map((e,i)=>e.explained?'':`<option value="${i}">${esc(e.t.slice(0,60))}…</option>`).join('');
+   h+=`<div class="stmt ${st.broken?'broken':''}"><b style="color:#f1c4a6">${s.name}</b>: <i>${esc(s.statement)}</i><br>${st.broken?'<span class="link" style="color:#f6c08a">✖ Broken — the lie is exposed.</span>':cs.evidence.length?`<select data-pick="${k}">${evOpts}</select><button class="btn small" data-present="${k}" ${here&&!S.combat?'':'disabled'}>⚖ Present evidence${here?'':' (find them first)'}</button>`:'<small style="color:#a8949e">Find evidence that could contradict this.</small>'}</div>`});
+  if(cs.moves&&cs.moves.length){h+='<h4>The Order’s Moves</h4>';cs.moves.forEach(m=>h+=`<div class="move">${esc(m)}</div>`)}
+  if(cs.methodKnown||cs.motiveKnown)h+=`<h4>Insights</h4><div style="font-size:15px">${cs.methodKnown?'⚙ Method: '+esc(SUSPECTS[cs.culprit].method)+'<br>':''}${cs.motiveKnown?'💭 Motive: '+esc(SUSPECTS[cs.culprit].motiveShort):''}</div>`;
+  h+='<h4>Suspects</h4>';
+  Object.entries(SUSPECTS).forEach(([k,s])=>{const n=linksFor(k),read=cs.read[k];h+=`<div class="sus"><div><b>${s.name}</b><small>${s.role}${read?` · <i>${esc(read)}</i>`:''}</small><span class="pips">${'●'.repeat(n)}${'○'.repeat(Math.max(0,3-n))}</span></div><div style="display:flex;flex-direction:column;gap:4px">${!cs.statements[k]?`<button class="btn small" data-alibi="${k}" ${suspectHere(k)&&!S.combat?'':'disabled'} title="${suspectHere(k)?'':'Find them to question them'}">📝 Alibi</button>`:''}<button class="btn small ${n>=3&&!cs.accused?'gold':''}" data-accuse="${k}" ${n<3||cs.accused||S.combat?'disabled':''}>Accuse</button></div></div>`});
+  h+='<p style="font-size:14px;color:#a8949e">Three analyzed pieces of evidence against one suspect are enough to accuse.</p>';
+  h+='<h4>Leads & Quests</h4>';
+  if(!S.quests.length)h+='<p style="color:#bba9b3">Speak with Constable Thorn.</p>';
+  [...S.quests].reverse().forEach(q=>h+=`<div class="quest ${q.done?'done':''}"><b>${q.done?'✔ ':''}${esc(q.title)}</b><br><span style="font-size:15px">${esc(q.desc)}</span></div>`);
+  if(S.bounty)h+=`<div class="quest"><b>Watch Contract</b><br><span style="font-size:15px">Put down the ${esc(S.bounty.enemyName)} at ${esc(locName(S.bounty.loc))} — ${S.bounty.reward} gold.</span></div>`;
+ }
+ else if(panelTab==='sheet'){
+  const next=XP_LEVELS[c.lvl]||c.xp;
+  h+=`<div class="sheetHead"><b>${esc(c.name)}</b><br><span style="color:#bba9b3">Level ${c.lvl} ${esc(c.race)} ${esc(c.cls)}<br>${esc(c.bg)}</span></div>`;
+  h+=`<div class="stats3"><div class="stat"><div class="k">HP</div><div class="v">${c.hp}/${c.maxHp}</div></div><div class="stat"><div class="k">AC</div><div class="v">${calcAC()}</div></div><div class="stat"><div class="k">PROF</div><div class="v">+${pb()}</div></div></div>`;
+  h+=`<div style="font-size:14.5px;color:#bba9b3">XP ${c.xp} / ${next} · Gold <b style="color:var(--gold2)">${c.gold}</b> · Hit Dice ${c.hitDice}/${c.lvl}d${C.hd}</div>`;
+  h+=`<div class="stats3">${ABIL.map(a=>`<div class="stat"><div class="k">${a}</div><div class="v">${c.abil[a]}</div><div style="color:var(--gold);font-size:14px">${sgn(mod(c.abil[a]))}</div></div>`).join('')}</div>`;
+  h+=`<h4>Attacks & Powers</h4><div style="font-size:15px">⚔ ${C.weapon.name}${c.weaponBonus?' +'+c.weaponBonus:''}: ${sgn(weaponAtk())} to hit, ${weaponDmg()}<br>`;
+  if(C.cantrip)h+=`✦ ${C.cantrip.name}: ${C.cantrip.kind==='attack'?sgn(spellAtk())+' to hit':'DC '+spellDC()+' save'}, ${cantripDice()}<br>`;
+  if(C.spell)h+=`✧ ${C.spell.name} (${c.slots}/${slotsMax(c.lvl)} ${C.pact?'pact ':''}slots): ${C.spell.desc}<br>`;
+  if(C.feature)h+=`★ ${C.feature.name}${C.feature.max?` (${c.feat}/${C.feature.max})`:''}: ${C.feature.desc}<br>`;
+  h+=`⛓ Enchanted Shackles: Bind a foe below half HP to capture and interrogate.<br>◆ ${RACES[c.race].trait}</div>`;
+  if(!S.combat&&C.spell&&C.spell.kind==='heal')h+=`<div style="margin-top:6px"><button class="btn small" data-cast="1" ${c.slots<1||c.hp>=c.maxHp?'disabled':''}>Cast ${C.spell.name}</button></div>`;
+  h+=`<h4>Skills</h4><div class="skills">${Object.keys(SKILLS).map(k=>`<div class="${isProf(k)?'p':''}"><span>${isProf(k)?'● ':''}${k}</span><span>${sgn(skillMod(k))}</span></div>`).join('')}</div>`;
+  if(c.blessed||c.hidden)h+=`<h4>Conditions</h4><div>${c.blessed?'✦ Inspired — advantage on your next check. ':''}${c.hidden?'🌑 Hidden — advantage on your next attack.':''}</div>`;
+  h+=`<h4>Dice Tray</h4><div class="dicebox">${[4,6,8,10,12,20,100].map(d=>`<button class="btn small" data-die="${d}">d${d}</button>`).join('')}</div>`;
+ }
+ else if(panelTab==='bag'){
+  h+=`<h4>Inventory · ${c.gold} gold</h4>`;
+  c.inv.filter(i=>i.qty>0).forEach(it=>{const def=ITEMS[it.name]||it;const usable=def.heal;
+   h+=`<div class="item"><div>${esc(it.name)}${it.qty>1?' ×'+it.qty:''}<small>${esc(def.desc||'')}</small></div>${usable?`<button class="btn small" data-use="${esc(it.name)}">Use</button>`:''}</div>`});
+  const shop=SHOPS[S.loc];
+  if(shop&&!S.combat){h+=`<h4>${shop.keeper}’s Wares</h4>`;shop.items.forEach(n=>{const d=ITEMS[n],pr=Math.round(d.price*(S.loc==='apothecary'&&S.flags.galeMarkup||1));h+=`<div class="item"><div>${n}<small>${d.desc}</small></div><button class="btn small" data-buy="${n}" ${c.gold<pr?'disabled':''}>${pr}g</button></div>`});
+   if(shop.room)h+=`<div class="item"><div>Room for the night<small>A safe long rest. (A bell tolls at dawn.)</small></div><button class="btn small" data-a="rent a room and take a long rest" ${c.gold<shop.room?'disabled':''}>${shop.room}g</button></div>`}
+ }
+ else if(panelTab==='map'){
+  h+='<h4>Vesperhollow</h4><div class="tiles">';
+  const ex=loc().exits||[];
+  S.known.forEach(id=>{const here=id===S.loc,adj=ex.includes(id),a=artUrl(id);h+=`<button class="tile ${here?'here':adj?'reach':''}" ${here||!adj||S.combat?'disabled':''} data-go="${id}" style="${a?`background-image:url('${a}')`:'background:radial-gradient(circle at 50% 60%,#e0a060 0,#6b2a1a 30%,#2a1218 70%)'}"><span>${here?'📍 ':''}${esc(locName(id))}</span></button>`});
+  h+='</div><p style="font-size:14px;color:#a8949e">Blue-framed places are reachable from here. Discover more by investigating.</p>';
+ }
+ else if(panelTab==='journal'){
+  h+='<h4>People You’ve Met</h4>';
+  const ns=Object.entries(S.npcs);if(!ns.length)h+='<p style="color:#bba9b3">No one yet.</p>';
+  ns.forEach(([n,v])=>{const col=v.att>0?'#4f6d3a':v.att<0?'#8c2a2a':'#47313e';h+=`<div class="npc"><b>${esc(n)}</b><span class="att" style="background:${col}">${attName(v.att)}</span><br><span style="color:#d0b9c2">${esc(v.role||'')}</span>${v.notes.length?'<br>• '+v.notes.slice(-4).map(esc).join('<br>• '):''}</div>`});
+  h+='<h4>Case Notes</h4>';
+  if(!S.memory.length)h+='<p style="color:#bba9b3">Key events will be recorded here.</p>';
+  else h+='<div style="font-size:15px">'+S.memory.slice(-15).map(m=>'• '+esc(m)).join('<br>')+'</div>';
+ }
+ p.innerHTML=h;
+}
+function renderCombat(){
+ const bar=$('#combatBar');const cb=S.combat;
+ bar.classList.toggle('hidden',!cb);$('#quick').classList.toggle('hidden',!!cb);
+ if(!cb)return;
+ const alive=cb.enemies.filter(e=>e.hp>0);if(cb.target==null||!cb.enemies[cb.target]||cb.enemies[cb.target].hp<=0)cb.target=cb.enemies.indexOf(alive[0]);
+ $('#foes').innerHTML=cb.enemies.map((e,i)=>`<button class="foe ${i===cb.target?'tgt':''} ${e.hp<=0?'dead':''}" data-tgt="${i}" ${e.hp<=0?'disabled':''}><b>${esc(e.name)}</b> <small>AC ${e.ac}</small>${e.mocked?' 😖':''}${e.captured?' ⛓':''}<div class="bar"><i style="width:${clamp(e.hp/e.maxHp*100,0,100)}%"></i></div></button>`).join('');
+ const C=cls(),c=S.char,t=cb.enemies[cb.target];let a='';
+ if(cb.down){a=`<button class="btn danger" data-c="deathsave">💀 Death Saving Throw (${cb.saves.s}✔ ${cb.saves.f}✖)</button>`}
+ else{
+  a+=`<button class="btn" data-c="attack">⚔ ${C.weapon.name}</button>`;
+  if(C.cantrip)a+=`<button class="btn" data-c="cantrip">✦ ${C.cantrip.name}</button>`;
+  if(C.spell)a+=`<button class="btn" data-c="spell" ${c.slots<1||(C.spell.kind==='mark'&&cb.mark)?'disabled':''}>✧ ${C.spell.name} (${c.slots})</button>`;
+  if(C.feature)a+=`<button class="btn" data-c="feature" ${C.feature.max&&c.feat<1?'disabled':''}>★ ${C.feature.name.split(':')[0]}</button>`;
+  a+=`<button class="btn" data-c="bind" ${!t||t.boss||t.hp>t.maxHp/2?'disabled':''} title="Capture a foe below half HP">⛓ Bind</button>`;
+  const pot=c.inv.find(i=>i.qty>0&&(ITEMS[i.name]?.heal||i.heal));
+  a+=`<button class="btn" data-c="potion" ${pot?'':'disabled'}>🧪 Tonic</button>`;
+  a+=`<button class="btn" data-c="dodge">🛡 Dodge</button><button class="btn" data-c="flee">🏃 Retreat</button>`;
+ }
+ $('#combatActs').innerHTML=a;
+}
+
+/* =========================================================
+   SOUNDTRACK — the original 120 generated loops (offline WebAudio)
+========================================================= */
+const Music=(()=>{
+ const groups=[
+ ['Cursed City',['Lanterns in the Rain','Blackthorn Nocturne','Whispers on Cobblestone','The Last Tram','Ashen Square Waltz','Clocktower Haze','Tavern at Midnight','Ravens Above','A Witness Waits','The Apothecary','Cemetery Lanterns','Market of Secrets','An Unsent Letter','The Watch Patrol','Thirteenth Bell']],
+ ['Forbidden Wilds',['Hollowroot Lullaby','Widow Marsh Mist','Blackwater Reflections','The Bone Orchard','Moonfall Echoes','Witchlight Cottage','Thornspire Wind','Silent Monastery','Ashen Battlefield','Forgotten Village','Ferns and Fog','A Distant Owl','Wandering Lantern','Beneath Old Oaks','The Hidden Trail']],
+ ['Underworld',['Below the Streets','Smugglers Passage','Bone Catacombs','Crimson Vault','Drowned Prison','Alchemists Requiem','Shadow Market','Obsidian Descent','Phantom Railway','Abyssal Threshold','Water on Stone','Echoes of Chains','The Lost Ledger','Deep Earth Pulse','No Way Back']],
+ ['Demonic Frontier',['Crimson Citadel','Mirror of Doubt','Soul Furnace','Fallen Cathedral','Dreaming Labyrinth','Seven Seals','Ashen Throne','Void Observatory','Black Testament Archive','Archdemon Sanctum','Veil Unraveling','Red Eclipse','Beneath the Sigil','The Last Invocation','The Broken Crown']],
+ ['Investigation',['The Missing Page','Unreliable Testimony','A Name in Ink','The Dusty Registry','Evidence at Dawn','Footsteps Behind','The Unmarked Door','Seven Unanswered Questions','The Candle and the Key','Confession in Minor','Letters from Nowhere','An Old Photograph','A Broken Promise','Threads of the Case','Deduction']],
+ ['Combat',['Cane and Shadow','The Pursuit','Ritual Interrupted','Wraith in the Alley','A Duel of Hexes','Cultist Ambush','Black Iron March','The Pursuer','Stand Your Ground','Arcane Counterstrike','The Broken Ward','No Surrender','Last of the Watch','Chasing Midnight','Trial by Firelight']],
+ ['Sanctuary',['Safehouse Embers','Tea at Dawn','Quiet Confession','Companions Rest','The Healers Candle','The Library Sleeps','A Moment of Mercy','Rain on the Window','Mended Pages','Letters Home','Under a Pale Moon','A New Ally','After the Storm','The Long Watch','Hope in Ashes']],
+ ['Mystic & Dream',['Astral Drift','The Oracle Speaks','Between Two Worlds','Ghostlight','Dream of the Bell','Spectral Garden','Shifting Mirrors','The Nameless Star','Veil of Memory','Runes in Water','Nightmare Waltz','The Other Side','A Door in Sleep','Ethereal Ashes','Beyond the Seventh Gate']]];
+ const tracks=groups.flatMap((g,gi)=>g[1].map((title,i)=>({id:gi*15+i+1,title,group:g[0],seed:gi*7919+i*127+31,bpm:[66,58,70,84,62,118,54,68][gi]+(i%5)*3,scale:[0,2,5,7,9,10,3,8][gi],intensity:gi===5?0.75:gi===3?0.5:0.28})));
+ const KEY='bt-soundtrack-v1';let prefs={enabled:false,auto:true,volume:0.27,track:1};try{Object.assign(prefs,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+ prefs.enabled=false; // audio must always be started by a tap
+ let audio=null,master=null,timer=null,next=0,step=0,lastGroup='';
+ const persist=()=>{try{localStorage.setItem(KEY,JSON.stringify(prefs))}catch(e){}};
+ function rand(seed){let x=seed|0;return()=>{x=(Math.imul(x,1664525)+1013904223)|0;return(x>>>0)/4294967296}}
+ function voice(freq,time,duration,vol,type='sine',filter=1200){if(!audio||!master)return;const osc=audio.createOscillator(),gain=audio.createGain(),lp=audio.createBiquadFilter();osc.type=type;osc.frequency.setValueAtTime(freq,time);lp.type='lowpass';lp.frequency.value=filter;gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(vol,time+Math.min(.025,duration*.15));gain.gain.exponentialRampToValueAtTime(.0001,time+duration);osc.connect(lp).connect(gain).connect(master);osc.start(time);osc.stop(time+duration+.02)}
+ function note(n){return 440*Math.pow(2,(n-69)/12)}
+ function percussion(time,vol,seed){if(!audio)return;const r=rand(seed),size=Math.round(audio.sampleRate*.09),buffer=audio.createBuffer(1,size,audio.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<size;i++)data[i]=(r()*2-1)*Math.pow(1-i/size,3);const src=audio.createBufferSource(),gain=audio.createGain(),lp=audio.createBiquadFilter();src.buffer=buffer;lp.type='lowpass';lp.frequency.value=650;gain.gain.value=vol;src.connect(lp).connect(gain).connect(master);src.start(time)}
+ function schedule(){if(!audio||!prefs.enabled)return;const track=tracks[prefs.track-1]||tracks[0],r=rand(track.seed+step),beat=60/track.bpm,scale=[0,2,3,5,7,8,10],base=45+track.scale;
+  while(next<audio.currentTime+.38){const i=step%32,bar=Math.floor(i/8),degree=[0,5,3,4][bar],root=base+scale[degree%7];
+   if(i%8===0){voice(note(root-12),next,beat*5,.085,'sine',430);voice(note(root),next,beat*6,.035,'triangle',620);voice(note(root+7),next,beat*5,.026,'sine',700)}
+   if(i%4===0)voice(note(root-12),next,beat*1.6,.045,'triangle',320);
+   if(i%2===0){const choices=[0,2,4,6,3,5,1,4],n=base+scale[choices[(i/2+Math.floor(track.seed/13))%8]]+12+(r()>.82?12:0);voice(note(n),next,beat*(r()>.6?1.65:.8),.028+track.intensity*.017,track.group==='Combat'?'sawtooth':'sine',track.group==='Combat'?850:1400)}
+   if((track.group==='Combat'||track.group==='Cursed City')&&i%4===2)percussion(next,.012+track.intensity*.023,track.seed+step);
+   step++;next+=beat/2}}
+ function label(){const t=tracks[prefs.track-1];return t?`♫ ${t.title} — ${t.group}`:''}
+ function updateUI(){const p=$('#mPlay');if(p)p.textContent=prefs.enabled?'❚❚ Pause':'▶ Play';const q=$('#musicQuick');if(q)q.textContent=prefs.enabled?'♫':'🔇';const n=$('#mNow');if(n)n.textContent=prefs.enabled?'Now playing: '+label():'Music is paused.';const ts=$('#titleMusicStatus');if(ts)ts.textContent=prefs.enabled?'Now playing: '+label():'Tap Play Music to enable audio (needed on iPhone).';const tb=$('#tMusic');if(tb)tb.textContent=prefs.enabled?'❚❚ Pause Music':'♫ Play Music';const sel=$('#mTrack');if(sel)sel.value=String(prefs.track);const v=$('#mVol');if(v)v.value=Math.round(prefs.volume*100);const au=$('#mAuto');if(au)au.checked=prefs.auto}
+ async function start(){try{if(!audio){audio=new (window.AudioContext||window.webkitAudioContext)();master=audio.createGain();master.connect(audio.destination)}await audio.resume();master.gain.value=prefs.volume;next=audio.currentTime+.05;step=0;prefs.enabled=true;clearInterval(timer);timer=setInterval(schedule,100);schedule();updateUI();persist()}catch(e){const n=$('#mNow');if(n)n.textContent='Audio unavailable here.'}}
+ function stop(){prefs.enabled=false;clearInterval(timer);timer=null;if(master)master.gain.value=0;updateUI();persist()}
+ function setTrack(id){prefs.track=clamp(id,1,tracks.length);step=0;if(audio)next=audio.currentTime+.05;updateUI();persist()}
+ function pickGroup(g){if(!prefs.auto||g===lastGroup)return;lastGroup=g;const list=tracks.filter(t=>t.group===g);if(!list.length)return;const seed=(S?S.loc.length*7+S.day:0);setTrack(list[seed%list.length].id)}
+ function onScene(){if(!S)return;const g=S.combat?'Combat':(loc().music||'Cursed City');pickGroup(g)}
+ function init(){const sel=$('#mTrack');sel.innerHTML=groups.map(([g,list],gi)=>`<optgroup label="${g}">${list.map((t,i)=>`<option value="${gi*15+i+1}">${gi*15+i+1}. ${t}</option>`).join('')}</optgroup>`).join('');
+  $('#mPlay').onclick=()=>prefs.enabled?stop():start();$('#tMusic').onclick=()=>prefs.enabled?stop():start();$('#musicQuick').onclick=()=>prefs.enabled?stop():start();
+  $('#mNext').onclick=()=>setTrack(prefs.track%tracks.length+1);$('#mPrev').onclick=()=>setTrack((prefs.track+tracks.length-2)%tracks.length+1);
+  sel.onchange=()=>{prefs.auto=false;setTrack(+sel.value)};$('#mVol').oninput=e=>{prefs.volume=e.target.value/100;if(master)master.gain.value=prefs.volume;persist()};$('#mAuto').onchange=e=>{prefs.auto=e.target.checked;lastGroup='';persist();onScene()};updateUI()}
+ return {init,onScene,start,stop,updateUI,pickGroup};
+})();
+
+/* =========================================================
+   DICE
+========================================================= */
+let actx=null;
+function clack(n=6){if(!settings.sound)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();for(let i=0;i<n;i++){const t=actx.currentTime+i*0.07+Math.random()*0.03,o=actx.createOscillator(),g=actx.createGain();o.type='triangle';o.frequency.value=500+Math.random()*900;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.18/(1+i*.25),t+0.005);g.gain.exponentialRampToValueAtTime(0.0001,t+0.06);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+0.08)}}catch(e){}}
+function toll(){if(!settings.sound)return;try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();const t=actx.currentTime;[110,220,277,330].forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;o.type='sine';g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.12/(i+1),t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+3.5);o.connect(g).connect(actx.destination);o.start(t);o.stop(t+3.6)})}catch(e){}}
+function d20Svg(){return `<svg class="shape" viewBox="0 0 100 100"><defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b2c4a"/><stop offset="1" stop-color="#2a0c18"/></linearGradient></defs>
+ <polygon points="50,3 91,26 91,74 50,97 9,74 9,26" fill="url(#dg)" stroke="#f0c5a7" stroke-width="2"/>
+ <polygon points="50,20 80,68 20,68" fill="rgba(255,255,255,.07)" stroke="#f0c5a7" stroke-width="1.5"/>
+ <path d="M50 3 L50 20 M91 26 L80 68 M9 26 L20 68 M91 74 L80 68 M9 74 L20 68 M50 97 L80 68 M50 97 L20 68 M50 20 L91 26 M50 20 L9 26" stroke="#f0c5a7" stroke-width="1.2" opacity=".7"/></svg>`}
+/* The player's d20s: the face number stays upright and readable while the die tumbles. */
+function rollD20(o){
+ return new Promise(resolve=>{
+  const m=$('#diceModal'),row=$('#diceRow'),okBtn=$('#diceOk'),res=$('#diceResult'),hint=$('#diceHint');
+  let adv=clamp(o.adv||0,-1,1);
+  const inspired=S&&o.kind==='check'&&S.char.blessed;if(inspired)adv=adv<0?0:1;
+  const nDice=adv?2:1;
+  $('#diceTitle').textContent=o.title;
+  $('#diceSub').innerHTML=esc(o.sub||'')+`<br><span style="font-size:15px">d20 ${sgn(o.mod)}${o.dc!=null?(o.kind==='attack'?' vs AC ':' vs DC ')+o.dc:''}${adv>0?' · <b class="succ">Advantage</b>':adv<0?' · <b class="fail">Disadvantage</b>':''}</span>`;
+  row.innerHTML='';const dice=[];
+  for(let i=0;i<nDice;i++){const d=document.createElement('div');d.className='d20';d.tabIndex=0;d.innerHTML=d20Svg()+'<div class="num">20</div>';row.appendChild(d);dice.push(d)}
+  res.innerHTML='';hint.textContent=settings.autoRoll?'Rolling…':'Tap the die (or press Roll)';okBtn.textContent='Roll';okBtn.disabled=false;
+  m.classList.remove('hidden');
+  let stage=0,result=null;
+  const go=()=>{
+   if(stage!==0)return;stage=1;okBtn.disabled=true;hint.textContent='';clack(7);
+   const vals=dice.map(()=>rnd(20));let lucky=false;
+   if(S&&RACES[S.char.race].lucky)vals.forEach((v,i)=>{if(v===1){vals[i]=rnd(20);lucky=true}});
+   dice.forEach((d,i)=>{d.classList.add('rolling');const num=d.querySelector('.num');let k=0;const t=setInterval(()=>{num.textContent=rnd(20);if(++k>12){clearInterval(t);num.textContent=vals[i]}},65)});
+   setTimeout(()=>{
+    const nat=adv>0?Math.max(...vals):adv<0?Math.min(...vals):vals[0];
+    const total=nat+o.mod;
+    const success=o.dc==null?null:(nat===20?true:nat===1?false:total>=o.dc);
+    let kept=false;dice.forEach((d,i)=>{d.classList.remove('rolling');const num=d.querySelector('.num');num.textContent=vals[i];if(nDice>1){if(vals[i]===nat&&!kept)kept=true;else d.classList.add('dim')}if(vals[i]===20)d.classList.add('crit');if(vals[i]===1)d.classList.add('fumble')});
+    const crit=nat===20,fum=nat===1;
+    const word=success==null?'':o.kind==='attack'?(crit?'CRITICAL HIT!':success?'HIT':'MISS'):(crit?'CRITICAL SUCCESS!':success?'SUCCESS':(fum?'CRITICAL FAILURE':'FAILURE'));
+    res.innerHTML=`<span class="big ${success?'succ':success===false?'fail':''}">${word||total}</span>${nat} ${sgn(o.mod)} = <b>${total}</b>${o.dc!=null?(o.kind==='attack'?' vs AC ':' vs DC ')+o.dc:''}${lucky?' <small>(Lucky reroll)</small>':''}`;
+    result={nat,rolls:vals,total,success,crit,fumble:fum,adv};
+    if(inspired)S.char.blessed=false;
+    stage=2;okBtn.disabled=false;okBtn.textContent='Continue';
+    if(settings.autoRoll)setTimeout(finish,1100);
+   },900);
+  };
+  const finish=()=>{if(stage!==2)return;stage=3;m.classList.add('hidden');okBtn.onclick=null;
+   if(S){const r=result;addLog('roll',`🎲 ${o.title}: d20${r.adv?` [${r.rolls.join(', ')}]→${r.nat}`:' '+r.nat} ${sgn(o.mod)} = ${r.total}${o.dc!=null?(o.kind==='attack'?' vs AC ':' vs DC ')+o.dc+' — '+(o.kind==='attack'?(r.crit?'CRITICAL HIT':r.success?'HIT':'MISS'):(r.crit?'CRITICAL SUCCESS':r.success?'SUCCESS':'FAILURE')):''}`)}
+   resolve(result)};
+  okBtn.onclick=()=>stage===0?go():finish();
+  dice.forEach(d=>{d.onclick=()=>stage===0?go():finish();d.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();d.onclick()}}});
+  if(settings.autoRoll)setTimeout(go,300);
+ });
+}
+function diffDC(dc){return clamp(Math.round(dc)+(settings.difficulty==='Easy'?-2:settings.difficulty==='Hard'?2:0),3,30)}
+async function check(skillOrAbil,dc,opts={}){
+ let modv,label;
+ const sl=String(skillOrAbil).toLowerCase();
+ const key=Object.keys(SKILLS).find(k=>sl.includes(k.toLowerCase()));
+ const ab=ABIL.find(a=>a===String(skillOrAbil).toUpperCase().slice(0,3))||ABIL.find(a=>sl.includes(ABIL_NAME[a].toLowerCase()))||ABIL.find(a=>new RegExp('\\b'+a.toLowerCase()+'\\b').test(sl));
+ if(key){modv=skillMod(key);label=`${key} (${SKILLS[key]})`}
+ else if(ab){modv=am(ab);label=`${ABIL_NAME[ab]}${opts.save?' Save':' Check'}`}
+ else{modv=am('WIS');label='Wisdom Check'}
+ const d=diffDC(dc);
+ return Object.assign(await rollD20({title:label,sub:opts.reason||'',mod:modv,dc:d,adv:opts.adv||0,kind:'check'}),{label,dc:d,mod:modv});
+}
+
+/* =========================================================
+   STATE CHANGES (all rewards & penalties pass through here)
+========================================================= */
+function heal(n,src){const c=S.char,before=c.hp;c.hp=clamp(c.hp+n,0,c.maxHp);if(c.hp>before)addLog('loot',`❤ ${src?src+': ':''}+${c.hp-before} HP (${c.hp}/${c.maxHp})`)}
+function hurt(n,src){const c=S.char;n=Math.max(0,Math.round(n));if(!n)return;c.hp=Math.max(0,c.hp-n);addLog('hurt',`💔 ${src?src+': ':''}−${n} HP (${c.hp}/${c.maxHp})`);
+ if(c.hp<=0){if(RACES[c.race].relentless&&!c.relentlessUsed){c.relentlessUsed=true;c.hp=1;addLog('combat','Your blood refuses to fall. **Relentless Endurance** keeps you standing at 1 HP!')}
+  else if(S.combat){S.combat.down=true;S.combat.saves={s:0,f:0};addLog('combat','You collapse onto wet stone, the world narrowing to a grey tunnel… Make death saving throws!')}
+  else{c.hp=1;addLog('sys','You black out, and wake some time later — bruised, but breathing. (1 HP)')}}}
+function gainXP(n){const c=S.char;n=Math.max(0,Math.round(n));if(!n)return;c.xp+=n;addLog('loot',`✨ +${n} XP`);
+ while(c.lvl<10&&c.xp>=XP_LEVELS[c.lvl]){c.lvl++;const C=cls(),gain=Math.max(1,Math.floor(C.hd/2)+1+am('CON')+(RACES[c.race].hp||0));c.maxHp+=gain;c.hp+=gain;c.hitDice++;c.slots=slotsMax(c.lvl);
+  addLog('place',`LEVEL ${c.lvl}!`);addLog('loot',`Max HP +${gain} · Proficiency +${pb()}${C.spell?' · Spell slots '+slotsMax(c.lvl):''}`);remember(`${c.name} reached level ${c.lvl}`)}}
+function gainGold(n){n=Math.round(n);if(!n)return;S.char.gold=Math.max(0,S.char.gold+n);addLog(n>0?'loot':'hurt',n>0?`🪙 +${n} gold`:`🪙 −${-n} gold`)}
+function giveItem(name,qty=1,extra={}){name=String(name).slice(0,40);if(!name)return;const ex=S.char.inv.find(i=>i.name.toLowerCase()===name.toLowerCase());if(ex)ex.qty+=qty;else S.char.inv.push(Object.assign({name,qty},ITEMS[name]?{}:{type:extra.type||'misc',desc:String(extra.desc||'').slice(0,120),heal:/^\d+d\d+([+-]\d+)?$/.test(extra.heal||'')?extra.heal:undefined}));addLog('loot',`🎒 Gained: ${name}${qty>1?' ×'+qty:''}`)}
+function takeItem(name,qty=1){const it=S.char.inv.find(i=>i.name.toLowerCase()===String(name).toLowerCase()&&i.qty>0);if(!it)return false;it.qty-=qty;if(it.qty<=0)S.char.inv.splice(S.char.inv.indexOf(it),1);addLog('sys',`Lost: ${it.name}`);return true}
+function addQuest(title,desc){title=String(title).slice(0,60);if(S.quests.some(q=>q.title.toLowerCase()===title.toLowerCase()))return;S.quests.push({title,desc:String(desc||'').slice(0,240),done:false});addLog('loot',`📜 New lead: ${title}`)}
+function updateQuest(title,desc){const q=S.quests.find(q=>q.title.toLowerCase()===String(title).toLowerCase());if(q&&!q.done){q.desc=String(desc).slice(0,240);addLog('sys',`Lead updated: ${q.title}`)}}
+function completeQuest(title){const q=S.quests.find(q=>!q.done&&q.title.toLowerCase().includes(String(title).toLowerCase().slice(0,20)));if(q){q.done=true;addLog('loot',`✔ Resolved: ${q.title}`);remember('Resolved: '+q.title)}}
+function meet(name,role){if(!S.npcs[name])S.npcs[name]={att:0,role:role||NPCS[name]?.role||'',notes:[]};return S.npcs[name]}
+function npcNote(name,note,delta=0){const n=meet(name);if(note){n.notes.push(String(note).slice(0,140));if(n.notes.length>8)n.notes.shift()}if(delta){n.att=clamp(n.att+delta,-2,2)}}
+function remember(fact){fact=String(fact).slice(0,160);if(!fact||S.memory.includes(fact))return;S.memory.push(fact);if(S.memory.length>40)S.memory.shift()}
+function discover(id){if(!S.known.includes(id)){S.known.push(id);addLog('loot',`🗺 Discovered: ${locName(id)}`)}}
+function linkExit(a,b){[[a,b],[b,a]].forEach(([x,y])=>{const X=loc(x);if(X&&!X.exits.includes(y)){if(WORLD[x]&&!S.locs[x])S.locs[x]=JSON.parse(JSON.stringify(WORLD[x]));loc(x).exits.push(y)}})}
+function tick(n=1){const before=Math.floor(S.turn/36);S.turn+=n;const after=Math.floor(S.turn/36);for(let d=before;d<after;d++){S.day++;tollBell('dawn')}}
+function tollBell(why){
+ if(S.case.solved||S.bells>=7)return;S.bells++;toll();
+ addLog('bell',`🔔 ${['','The First','The Second','The Third','The Fourth','The Fifth','The Sixth','THE SEVENTH'][S.bells]} Bell tolls across Vesperhollow${why==='alarm'?' — the Order knows you are close':''}.`);
+ if(S.bells>=4&&S.bells<=6)cultMove();
+ if(S.bells===5)addLog('gm','The bells are louder now. Dogs howl in every district. You have two dawns left — perhaps less.');
+ if(S.bells>=7){addLog('gm','The seventh bell. Every window in Vesperhollow rattles at once, and for a heartbeat the rain falls upward. Somewhere below the city, the rite is complete. Whoever leads the Order is stronger now — but not yet finished. End this.');remember('The seventh bell rang — the rite is complete.')}
+}
+
+/* =========================================================
+   EVIDENCE & DEDUCTION
+========================================================= */
+function revealClue(site,how){
+ const sp=S.case.spots[site];if(!sp||sp.found)return false;sp.found=true;
+ const text=sp.t.charAt(0).toUpperCase()+sp.t.slice(1);
+ S.case.evidence.push({t:text,s:sp.s,where:site,analyzed:false});
+ if(how)addLog('gm',how);
+ addLog('clue',`🔎 EVIDENCE — ${text}.`);
+ remember(`Found evidence at ${locName(site)}: ${sp.t.slice(0,80)}`);
+ gainXP(25);
+ if(S.case.evidence.length===1)addLog('sys','Evidence goes on your Case board. Analyze it to learn who it points to.');
+ return true;
+}
+function unfoundSites(){return Object.entries(S.case.spots).filter(([k,v])=>!v.found).map(([k])=>k)}
+async function analyze(i){
+ if(busy||S.combat)return;const e=S.case.evidence[i];if(!e||e.analyzed)return;
+ busy=true;lockUI(true);
+ try{
+  const best=skillMod('Investigation')>=skillMod('Arcana')||!/(magic|crystal|scrying|ring|hum)/.test(e.t)?'Investigation':'Arcana';
+  addLog('you',`Analyze the evidence: ${e.t.slice(0,60)}…`);
+  const r=await check(best,12,{reason:'Connect the evidence to a suspect'});
+  if(r.success){e.analyzed=true;const sus=SUSPECTS[e.s];addLog('clue',`🧩 Deduction — this points to **${sus.name}**.`);remember(`Evidence points to ${sus.name}`);gainXP(15);
+   if(e.s===S.case.culprit&&!S.case.methodKnown&&S.case.evidence.filter(x=>x.analyzed&&x.s===e.s).length>=2){S.case.methodKnown=true;addLog('clue',`⚙ Method insight — laid side by side, the evidence shows how the bells were rung: ${SUSPECTS[e.s].method.toLowerCase()}.`);remember('Method: '+SUSPECTS[e.s].method)}
+   if(linksFor(e.s)>=3&&!S.case.accused)addLog('sys',`You have enough to accuse ${sus.name}. Use the Case board.`)}
+  else{addLog('gm','The pieces won’t line up yet. You lose an hour turning it over in your hands.');tick(4)}
+ }finally{busy=false;lockUI(false);render();autosave()}
+}
+function npcPresent(n){return (loc().npcs||[]).includes(n)}
+function suspectHere(k){return npcPresent(SUSPECTS[k].name)}
+function moveNpc(n,from,to){[from,to].forEach(id=>{if(WORLD[id]&&!S.locs[id])S.locs[id]=JSON.parse(JSON.stringify(WORLD[id]))});S.locs[from].npcs=(S.locs[from].npcs||[]).filter(x=>x!==n);S.locs[to].npcs=[...new Set([...(S.locs[to].npcs||[]),n])]}
+function nellSite(){return S.case.spots.tavern?'tavern':'ashen'}
+/* ---- statements & contradictions ---- */
+function takeStatement(k,quiet){
+ const s=SUSPECTS[k];if(!s||S.case.statements[k])return false;
+ S.case.statements[k]={broken:false};meet(s.name);
+ if(!quiet)addLog('gm',`**${s.name}** gives an account of the murder nights: ${s.statement}`);
+ addLog('sys',`📝 Statement recorded on the Case board. If your evidence contradicts it, present it to ${s.name}.`);
+ npcNote(s.name,'Gave you an alibi for the murder nights');return true;
+}
+async function presentEvidence(k,idx){
+ if(busy||S.combat)return;const s=SUSPECTS[k],st=S.case.statements[k],e=S.case.evidence[idx];
+ if(!st||st.broken||!e)return;
+ if(!suspectHere(k)){addLog('sys',`${s.name} isn’t here. Find them to confront them.`);return}
+ busy=true;lockUI(true);
+ try{
+  addLog('you',`Confront ${s.name} with the evidence: ${e.t.slice(0,70)}…`);
+  if(e.s!==k){tick(3);npcNote(s.name,'You confronted them with irrelevant evidence',-1);addLog('gm',`${s.name} looks at it, then at you. “And what is that supposed to prove?” It doesn’t touch their story — and you’ve lost face.`);return}
+  st.broken=true;if(!e.analyzed){e.analyzed=true;addLog('clue',`🧩 The confrontation proves it — this points to **${s.name}**.`)}
+  addLog('place','Contradiction!');
+  if(k===S.case.culprit){
+   addLog('gm',`${s.name}’s story cracks down the middle. ${s.slip}`);
+   S.case.motiveKnown=true;S.case.read[k]='caught lying about the murder nights';
+   addLog('clue',`💭 Motive insight — ${s.motiveShort}.`);remember(`${s.name} let slip a motive: ${s.motiveShort}`);npcNote(s.name,'You broke their alibi — they slipped',-1);gainXP(60);
+  }else{
+   e.explained=true;addLog('gm',s.secret);
+   addLog('clue',`✔ Lie explained — the evidence against ${s.name} is accounted for and no longer points to them.`);
+   remember(`${s.name}’s lie was a cover for something else; cleared of that evidence`);npcNote(s.name,'Confessed a private secret to you',1);gainXP(40);
+  }
+ }finally{busy=false;lockUI(false);render();autosave()}
+}
+/* ---- the Order strikes back ---- */
+function cultMove(){
+ const cs=S.case;if(cs.accused||cs.solved)return;
+ const opts=[];
+ const unfound=unfoundSites();
+ const cTotal=Object.values(cs.spots).filter(v=>v.s===cs.culprit).length;
+ const scrubbable=unfound.filter(x=>x!==S.loc&&(cs.spots[x].s!==cs.culprit||cTotal>3));
+ if(scrubbable.length)opts.push('scrub','scrub');
+ if(cs.spots.ashen&&!cs.spots.ashen.found)opts.push('threat');
+ opts.push('ambush');
+ const turnable=['Pike','Mother Gale','Old Marta'].filter(n=>(S.npcs[n]?.att??0)>=0&&!cs.moves.some(m=>m.includes(n)));
+ if(turnable.length)opts.push('turn');
+ const m=pick(opts);let text='';
+ if(m==='scrub'){const site=pick(scrubbable);delete cs.spots[site];text=`The Order scrubbed ${locName(site)} clean. Whatever was hidden there is gone.`;addLog('gm',`A runner finds you, breathless: smoke at ${locName(site)}. By the time anyone arrived, the place had been scoured — lye, fire, and a chalk halo on the wall.`)}
+ else if(m==='threat'){cs.spots.tavern=cs.spots.ashen;delete cs.spots.ashen;moveNpc('Nell','ashen','tavern');text='The Order threatened Nell. She has gone into hiding at the Mourning Bell.';addLog('gm','Nell’s flower bucket lies overturned by the fountain, a broken halo chalked on the stones beside it. Word comes later: she fled to the Mourning Bell Tavern and won’t come out.')}
+ else if(m==='ambush'){S.flags.ambush=true;text='The Order has sent killers after you.';addLog('gm','A raven drops a scrap of black ribbon at your feet, knotted seven times. The Order knows your face now. Watch the shadows.')}
+ else if(m==='turn'){const n=pick(turnable);npcNote(n,'Leaned on by the Order — colder toward you now',-2);if(n==='Pike')S.flags.pikePrice=25;if(n==='Mother Gale')S.flags.galeMarkup=1.5;text=`The Order got to ${n}.`;addLog('gm',n==='Pike'?'Word from the Hollow: Pike has new friends with deep pockets. His prices have gone up — for you especially.':n==='Mother Gale'?'Mother Gale’s door has a new halo scratched into the frame. Her prices have risen, and her welcome has cooled.':'Old Marta won’t meet your eyes tonight. Someone has been talking to her.')}
+ cs.moves.push(`Bell ${S.bells}: ${text}`);addLog('sys','⚠ The Order has made a move. (See the Case board.)');
+}
+/* ---- the accusation: who, how, why ---- */
+let accState=null;
+function accuse(k){
+ if(busy||S.combat||S.case.accused)return;if(linksFor(k)<3)return;
+ const others=shuffle(Object.keys(SUSPECTS).filter(x=>x!==S.case.culprit)).slice(0,2);
+ const hows=shuffle([S.case.culprit,...others]),whys=shuffle([S.case.culprit,...shuffle(Object.keys(SUSPECTS).filter(x=>x!==S.case.culprit)).slice(0,2)]);
+ accState={k,how:null,why:null};
+ $('#accWho').innerHTML=`You will name <b>${esc(SUSPECTS[k].name)}</b> as the leader of the Broken Halo.`;
+ $('#accHow').innerHTML=hows.map(x=>`<button class="btn opt" data-how="${x}">${esc(SUSPECTS[x].method)}${S.case.methodKnown&&x===S.case.culprit?' ✦':''}</button>`).join('');
+ $('#accWhy').innerHTML=whys.map(x=>`<button class="btn opt" data-why="${x}">${esc(SUSPECTS[x].motiveShort)}${S.case.motiveKnown&&x===S.case.culprit?' ✦':''}</button>`).join('');
+ $('#accGo').disabled=true;$('#side').classList.remove('open');$('#accModal').classList.remove('hidden');
+}
+$('#accModal').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b||!accState)return;
+ if(b.dataset.how){accState.how=b.dataset.how;$$('#accHow .opt').forEach(x=>x.classList.toggle('sel',x===b))}
+ if(b.dataset.why){accState.why=b.dataset.why;$$('#accWhy .opt').forEach(x=>x.classList.toggle('sel',x===b))}
+ $('#accGo').disabled=!(accState.how&&accState.why)});
+$('#accCancel').onclick=()=>{$('#accModal').classList.add('hidden');accState=null};
+$('#accGo').onclick=()=>{const a=accState;$('#accModal').classList.add('hidden');accState=null;if(a)finalizeAccusation(a.k,a.how,a.why)};
+function finalizeAccusation(k,how,why){
+ if(busy||S.combat||S.case.accused)return;const sus=SUSPECTS[k];if(linksFor(k)<3)return;
+ S.case.accused=k;const culprit=k===S.case.culprit;
+ const proof=(how===S.case.culprit?1:0)+(why===S.case.culprit?1:0);if(culprit)S.case.proof=proof;
+ addLog('place','The Accusation');
+ if(!culprit){addLog('gm',`You lay the evidence out — but it doesn’t hold. ${sus.name} walks free, and somewhere a bell-rope moves.`);tollBell('alarm');S.case.accused=false;render();return}
+ addLog('gm',`You lay the evidence out piece by piece. With the third, ${sus.name} stops pretending.\n\n“Clever,” they say, and the voice is not quite their own. “But the bells are already ringing.” Shadow pours from their sleeves like ink from a broken bottle — and when it clears, they are gone. On the ground where they stood: chalk, drawn into a broken halo, pointing down. Into the sewers.`);
+ addLog('clue',proof===2?'⚖ AIRTIGHT CASE — who, how and why. They fled in panic, their rite unprepared. (The final foe is weakened.)':proof===1?`⚖ A strong case — but you got the ${how===S.case.culprit?'motive':'method'} wrong, and they know exactly how much you know.`:'⚖ You named the right person for the wrong reasons. They had time to prepare. (The final foe is stronger.)');
+ if(proof===2)gainXP(100);
+ npcNote(sus.name,'Unmasked as the leader of the Broken Halo',-2);
+ remember(`Unmasked ${sus.name} as the leader of the Broken Halo`);
+ completeQuest('The Broken Halo Murders');
+ addQuest('The Seventh Seal',`${sus.name} fled beneath the city. Follow the halo marks from the Old Sewers into the Bone Catacombs and stop the rite at the Seven Seals.`);
+ discover('sewers');linkExit('sewers','catacombs');discover('catacombs');linkExit('catacombs','seals');
+ gainXP(150);S.suggestions=['Go to Weeping Bridge','Buy tonics at the Apothecary','Take a long rest'];
+ render();autosave();
+}
+
+/* =========================================================
+   MOVEMENT
+========================================================= */
+async function moveTo(id,{quiet=false,force=false}={}){
+ if(!loc(id))return false;
+ if(!force&&!(loc().exits||[]).includes(id)){addLog('sys',`You can’t reach ${locName(id)} directly from here.`);return false}
+ if(id==='seals'&&!S.case.accused){addLog('gm','The halo marks end at a wall of bones. Whatever lies beyond, you haven’t earned the way through — not until you know who you’re hunting.');return false}
+ S.prevLoc=S.loc;S.loc=id;discover(id);tick(2);
+ addLog('place',locName(id));
+ const first=!S.visited[id];S.visited[id]=(S.visited[id]||0)+1;
+ if(!quiet)addLog('gm',first?loc(id).desc:loc(id).desc.split(/(?<=[.!?])\s/).slice(0,2).join(' '));
+ (loc(id).npcs||[]).forEach(n=>{if(NPCS[n])meet(n)});
+ await arrivalEvents(id,first);
+ return true;
+}
+async function arrivalEvents(id,first){
+ if(S.flags.ambush&&!loc(id).safe&&id!=='seals'){S.flags.ambush=false;addLog('gm','Seven knots, seven killers — or two, at least. Hooded figures with chalk halos on their brows step out of the dark. “The Order sends its regards.”');startCombat(['cultist','cultist']);return}
+ if(S.bounty&&S.bounty.loc===id){const m=MONSTERS[S.bounty.enemy];addLog('gm',`There — the ${m.name.toLowerCase()} from the Watch contract. It has seen you too.`);startCombat([S.bounty.enemy],{bounty:true});return}
+ if(id==='sewers'&&first){addLog('gm','The water ahead boils — no, not water. Rats, hundreds of them, pouring toward your light!');startCombat(['rat','rat']);return}
+ if(id==='catacombs'&&first){addLog('gm','Bones rattle in their niches. Two skeletal guardians climb free, halo-marks glowing on their foreheads.');startCombat(['skeleton','skeleton']);return}
+ if(id==='seals'&&!S.case.solved){const k=S.case.culprit,s=SUSPECTS[k];addLog('gm',`${s.name} stands within the seventh seal, robed in red. ${s.motive}\n\n“You could have walked away,” they say. “Now you’ll be the last voice the bells drown out.”`);startCombat(['__boss','fanatic']);return}
+ const l=loc(id);
+ if(l.wild&&l.enc&&!first&&Math.random()<0.28){const m=pick(l.enc);addLog('gm',pick(['Footsteps in the fog — then a shape lunges.','You hear it before you see it.','An ambush!'])+` A ${MONSTERS[m].name.toLowerCase()} attacks!`);startCombat([m]);}
+}
+
+/* =========================================================
+   COMBAT ENGINE
+========================================================= */
+function bossStats(){const s=SUSPECTS[S.case.culprit];const late=S.bells>=7;const pf=S.case.proof??1;return {name:s.boss,hp:Math.round((late?60:42)*(pf===2?0.75:pf===0?1.25:1)),ac:late?15:14,atk:late?6:5,dmg:late?'1d10+4':'1d10+2',xp:700,boss:'culprit',special:'bellwave'}}
+function makeEnemy(m){
+ const base=m==='__boss'?bossStats():typeof m==='string'?MONSTERS[m]:m;const mult=settings.difficulty==='Easy'?0.75:settings.difficulty==='Hard'?1.25:1;
+ const hp=Math.max(1,Math.round((+base.hp||8)*mult));
+ return {name:String(base.name||'Foe').slice(0,48),hp,maxHp:hp,ac:clamp(+base.ac||12,8,20),atk:clamp(+base.atk||3,0,10),dmg:/^\d+d\d+([+-]\d+)?$/.test(base.dmg)?base.dmg:'1d6+1',xp:clamp(+base.xp||25,5,1500),boss:base.boss,special:base.special,cultist:/cult|fanatic|acolyte/i.test(base.name||'')};
+}
+function startCombat(list,meta={}){
+ const enemies=list.map(makeEnemy);
+ const init=rnd(20)+am('DEX'),eInit=rnd(20)+2;
+ S.combat={enemies,round:1,target:0,dodge:false,mark:false,sneakUsed:false,down:false,saves:{s:0,f:0},meta,pending:init<eInit};
+ addLog('roll',`⚔ Initiative: you ${init} vs foes ${eInit} — ${init>=eInit?'you act first':'they strike first'}!`);
+ render();
+}
+async function combatAction(kind){
+ if(busy||!S.combat)return;busy=true;lockUI(true);
+ try{await doCombat(kind)} finally {busy=false;lockUI(false);render();autosave()}
+}
+async function doCombat(kind){
+ if(!S.combat)return;
+ const cb=S.combat,C=cls(),c=S.char,t=cb.enemies[cb.target];
+ if(kind==='deathsave'){await deathSave();return}
+ let usedTurn=true;
+ if(kind==='attack'){addLog('you',`Attack ${t.name} with your ${C.weapon.name}.`);await attackRoll(t,weaponAtk(),weaponDmg(),C.weapon.name,true)}
+ else if(kind==='cantrip'){const cp=C.cantrip;addLog('you',`Cast ${cp.name} at ${t.name}.`);
+  if(cp.kind==='attack')await attackRoll(t,spellAtk(),cantripDice(),cp.name,false);
+  else{const save=rnd(20)+1;const ok=save<spellDC();addLog('roll',`🎲 ${t.name} saves vs ${cp.name}: ${save} vs DC ${spellDC()} — ${ok?'FAIL (it is hit)':'SUCCESS (it resists)'}`);
+   if(ok){const d=rollExpr(cantripDice());addLog('roll',`Damage ${d.text}`);damage(t,d.total,cp.name==='Sacred Flame'?'Radiant flame engulfs':'Your words cut deep into');if(cp.debuff&&t.hp>0)t.mocked=true}
+   else addLog('combat',`${t.name} shrugs off your ${cp.name}.`)}}
+ else if(kind==='spell'){const sp=C.spell;if(c.slots<1){addLog('sys','No spell slots left.');usedTurn=false}else{c.slots--;addLog('you',`Cast ${sp.name}.`);
+  if(sp.kind==='auto'){const d=rollExpr(sp.dmg);addLog('roll',`${sp.name} ${d.text}`);damage(t,d.total,'Three burning sigils slam into')}
+  else if(sp.kind==='heal'){const d=rollExpr(addMod(sp.dmg+'+0',am(C.caster)));addLog('roll',`${sp.name} ${d.text}`);heal(d.total,sp.name)}
+  else if(sp.kind==='mark'){cb.mark=true;addLog('combat',`You speak the curse and ${t.name} flinches as if struck. Your hits will bite deeper. (Bonus action — attack too!)`);
+   if(C.cantrip&&C.cantrip.kind==='attack')await attackRoll(t,spellAtk(),cantripDice(),C.cantrip.name,true);else await attackRoll(t,weaponAtk(),weaponDmg(),C.weapon.name,true)}}}
+ else if(kind==='feature'){const f=C.feature;
+  if(f.id==='secondWind'){if(c.feat<1){addLog('sys','Second Wind is spent until you rest.');usedTurn=false}else{c.feat--;const d=rollExpr('1d10+'+c.lvl);addLog('roll',`Second Wind ${d.text}`);heal(d.total,'Second Wind');addLog('combat','You grit your teeth and steady your blade. (Bonus action — attack too!)');await attackRoll(t,weaponAtk(),weaponDmg(),C.weapon.name,true)}}
+  else if(f.id==='hide'){addLog('you','Melt into the shadows.');const r=await check('Stealth',10+cb.enemies.filter(e=>e.hp>0).length*2,{reason:'Hide as a bonus action'});if(r.success){c.hidden=true;cb.sneakUsed=false;addLog('combat','You vanish into the fog. Your next strike comes from nowhere. (Then attack!)');await attackRoll(t,weaponAtk(),weaponDmg(),C.weapon.name,true)}else addLog('combat','Too much lantern light. They track you.')}}
+ else if(kind==='bind'){
+  if(!t||t.boss||t.hp>t.maxHp/2){addLog('sys','The foe must be below half its health to bind.');usedTurn=false}
+  else{addLog('you',`Snap the enchanted shackles on ${t.name}.`);const sk=skillMod('Athletics')>=skillMod('Arcana')?'Athletics':'Arcana';const r=await check(sk,12,{reason:'Bind with the enchanted shackles'});
+   if(r.success){t.hp=0;t.captured=true;addLog('combat',`The shackles flare violet and lock. ${t.name} is bound.`);cb.captives=(cb.captives||[]).concat([t])}
+   else addLog('combat',`${t.name} wrenches free of the shackles.`)}}
+ else if(kind==='potion'){const it=c.inv.find(i=>i.qty>0&&(ITEMS[i.name]?.heal||i.heal));if(it){const d=rollExpr(ITEMS[it.name]?.heal||it.heal);addLog('you',`Drink a ${it.name}.`);addLog('roll',`${it.name} ${d.text}`);it.qty--;if(it.qty<=0)c.inv.splice(c.inv.indexOf(it),1);heal(d.total,it.name)}}
+ else if(kind==='dodge'){cb.dodge=true;addLog('you','Take the Dodge action.');addLog('combat','You raise your cane and watch their every move. Attacks against you have disadvantage this round.')}
+ else if(kind==='flee'){addLog('you','Retreat!');const best=skillMod('Athletics')>=skillMod('Acrobatics')?'Athletics':'Acrobatics';const n=cb.enemies.filter(e=>e.hp>0).length;
+  if(cb.enemies.some(e=>e.boss)){addLog('gm','The seals flare and the chamber doors grind shut. There is no retreat now.')}
+  else{const r=await check(best,10+n*2,{reason:'Break away into the fog'});if(r.success){addLog('combat','You break away and lose them in the fog.');S.combat=null;const back=S.prevLoc!==S.loc?S.prevLoc:(loc().exits||[])[0];if(back&&loc(back)){S.loc=back;addLog('place',locName(back))}return}else addLog('combat','They cut off your escape!')}}
+ if(!S.combat)return;
+ if(checkVictory())return;
+ if(usedTurn)await enemyTurn();
+}
+async function attackRoll(t,atk,dmg,src,weapon){
+ const cb=S.combat,c=S.char;const adv=c.hidden?1:0;
+ const r=await rollD20({title:`${src} → ${t.name}`,sub:c.hidden?'From the shadows!':'',mod:atk,dc:t.ac,adv,kind:'attack'});
+ if(c.hidden)c.hidden=false;
+ if(!r.success){addLog('combat',pick([`Your ${src.toLowerCase()} glances off ${t.name}.`,`${t.name} twists away at the last instant.`,`A near miss — ${t.name} hisses.`]));return}
+ const parts=[rollExpr(dmg,r.crit)];
+ if(weapon&&cb.mark)parts.push(rollExpr('1d6',r.crit));
+ if(weapon&&c.cls==='Shadow Detective'&&!cb.sneakUsed&&(r.adv>0||cb.round===1)){parts.push(rollExpr(Math.ceil(c.lvl/2)+'d6',r.crit));cb.sneakUsed=true;addLog('combat','**Sneak Attack!**')}
+ const total=parts.reduce((a,p)=>a+p.total,0);
+ addLog('roll',`Damage ${parts.map(p=>p.text).join(' + ')}${parts.length>1?' → '+total:''}`);
+ damage(t,total,r.crit?'A devastating blow strikes':'You strike');
+}
+function damage(t,n,verb){t.hp=Math.max(0,t.hp-n);
+ if(t.hp<=0)addLog('combat',`${verb} ${t.name} for ${n}. ${pick([`${t.name} crumples onto the stones.`,`${t.name} falls and does not rise.`,`${t.name} is defeated!`])}`);
+ else addLog('combat',`${verb} ${t.name} for ${n} damage. ${t.hp<=t.maxHp/2&&!t.boss?`${t.name} is reeling — bind them now?`:''}`)}
+async function enemyTurn(){
+ const cb=S.combat;if(!cb)return;
+ for(const e of cb.enemies){
+  if(e.hp<=0||!S.combat||cb.down)continue;await sleep(380);
+  if(e.special==='bellwave'&&cb.round%3===0){const d=rollExpr(S.bells>=7?'3d6+2':'2d6+2');addLog('combat','A phantom bell tolls inside your skull!');const sv=await check('CON',13,{reason:'Withstand the bell-wave',save:true});const dm=sv.success?Math.floor(d.total/2):d.total;addLog('roll',`Bell-wave ${d.text}${sv.success?' (halved)':''}`);hurt(dm,'Bell-wave');continue}
+  const dis=cb.dodge||e.mocked;const a=rnd(20),b=rnd(20);const nat=dis?Math.min(a,b):a;const tot=nat+e.atk;const ac=calcAC();const hit=nat===20||(nat!==1&&tot>=ac);
+  addLog('roll',`🎲 ${e.name} attacks: d20${dis?` [${a}, ${b}]→${nat}`:' '+nat} ${sgn(e.atk)} = ${tot} vs AC ${ac} — ${nat===20?'CRITICAL HIT':hit?'HIT':'MISS'}`);
+  e.mocked=false;
+  if(hit){const d=rollExpr(e.dmg,nat===20);addLog('roll',`Damage ${d.text}`);hurt(d.total,e.name)}
+  else addLog('combat',pick([`You turn ${e.name}’s blow aside with your cane.`,`${e.name} strikes only fog.`,`Your coat’s wards spark — the blow slides off.`]));
+ }
+ if(S.combat){cb.dodge=false;cb.round++}
+}
+function checkVictory(){
+ const cb=S.combat;if(!cb||cb.enemies.some(e=>e.hp>0))return false;
+ const xp=cb.enemies.reduce((a,e)=>a+Math.round(e.xp*(e.captured?1.25:1)),0);const gold=cb.enemies.reduce((a,e)=>a+(e.boss?0:rnd(6)+(e.xp>=100?5:0)),0);
+ addLog('place','VICTORY');gainXP(xp);if(gold)gainGold(gold);
+ if(Math.random()<0.25&&!cb.enemies.some(e=>e.boss))giveItem('Healing Tonic');
+ const bossWon=cb.enemies.some(e=>e.boss==='culprit'),meta=cb.meta||{},caps=cb.captives||[];
+ S.combat=null;S.char.hidden=false;
+ remember(`Defeated ${cb.enemies.map(e=>e.name).join(', ')} at ${locName(S.loc)}`);
+ caps.forEach(cap=>{
+  const left=unfoundSites();
+  if(cap.cultist&&left.length){const site=pick(left);addLog('gm',`You haul the bound ${cap.name.toLowerCase()} into a doorway. The shackles glow; lies hurt to tell in them. After a while, they talk — about a drop-site at ${locName(site)}, and what was left there.`);if(!S.known.includes(site))discover(site);revealClue(site)}
+  else addLog('gm',`You question the bound ${cap.name.toLowerCase()}, but it has nothing useful to give. You hand it to the Watch.`)});
+ if(meta.bounty&&S.bounty){gainGold(S.bounty.reward);addLog('loot','Watch contract fulfilled. Thorn’s clerk pays on sight.');S.bounty=null}
+ if(bossWon){S.case.solved=true;completeQuest('The Seventh Seal');gainGold(250);
+  const pf=S.case.proof??1;
+  const ending=pf===0&&S.bells<7?['The Broken Testament','You stopped the rite, but you never truly understood it. The Order is broken; how they rang the bells, and why, will haunt your case notes for years.']:S.bells<=4&&pf===2?['The Vigil of Ash','You broke the rite with bells to spare. Vesperhollow wakes to silence — real silence — for the first time in a week. The Crown offers your old post back. You haven’t decided.']:S.bells<7?['The Broken Testament','You shattered the seventh seal with the rite half-born. The Order is broken; its deeper origins remain unknown. The bells, at last, are only bells.']:['The Unquiet City','The rite had finished, but you finished its master. The city survives — changed. Some nights the bells still ring on their own, and new cases find their way beneath your door.'];
+  addLog('gm',`The last blow lands. The figure in red folds to its knees, and the seven seals go dark one by one, like candles pinched out. Somewhere above you, very faintly, a single ordinary church bell rings the ordinary hour.`);
+  addLog('place',`Ending — ${ending[0]}`);addLog('gm',ending[1]);remember(`Case closed: ${ending[0]}`);
+  setTimeout(()=>{$('#endTitle').textContent=ending[0];$('#endText').innerHTML=`${esc(ending[1])}<br><br>The investigation can continue — Constable Thorn’s Watch always has another contract.`;$('#endA').textContent='Keep Investigating';$('#endA').onclick=()=>$('#endModal').classList.add('hidden');$('#endC').classList.add('hidden');$('#endModal').classList.remove('hidden')},1200)}
+ S.suggestions=offlineSuggestions();
+ return true;
+}
+async function deathSave(){
+ const cb=S.combat;const r=await rollD20({title:'Death Saving Throw',sub:'Cling to life…',mod:0,dc:10,kind:'save'});
+ if(r.nat===20){S.char.hp=1;cb.down=false;addLog('combat','A surge of will! You gasp and rise with 1 HP!');return}
+ if(r.nat===1)cb.saves.f+=2;else if(r.success)cb.saves.s++;else cb.saves.f++;
+ if(cb.saves.f>=3){addLog('combat','The grey tunnel closes. Your investigation ends here…');S.combat=null;S.dead=true;$('#endC').classList.remove('hidden');setTimeout(()=>{$('#endTitle').textContent='You Have Fallen';$('#endText').textContent=`${S.char.name} has died at ${locName(S.loc)}. Load your last save, or wake at the Mourning Bell Tavern (lose half your gold, and a bell tolls).`;$('#endA').textContent='Wake at the Tavern';$('#endA').onclick=revive;$('#endModal').classList.remove('hidden')},800);return}
+ if(cb.saves.s>=3){const lost=Math.floor(S.char.gold/2);S.combat=null;S.char.hp=1;addLog('combat','You stabilise. When you wake, your attackers are gone — and so is half your coin.');if(lost)gainGold(-lost);S.loc='tavern';addLog('place',locName('tavern'));addLog('gm','A Watch patrol found you and carried you to the Mourning Bell. Old Marta presses hot broth into your hands.');}
+}
+function revive(){$('#endModal').classList.add('hidden');$('#endC').classList.add('hidden');S.dead=false;const c=S.char;c.hp=Math.max(1,Math.floor(c.maxHp/2));c.gold=Math.floor(c.gold/2);S.combat=null;S.loc='tavern';addLog('place',locName('tavern'));addLog('gm','You wake by the Mourning Bell’s fire with no memory of how you got there. Old Marta doesn’t ask. Outside, a bell is ringing.');tollBell('dawn');render();autosave()}
+
+/* =========================================================
+   CLASSIC (OFFLINE) GAME MASTER
+========================================================= */
+function findLocIn(t){
+ const here=loc();const cands=[...new Set([...(here.exits||[]),...S.known])];
+ const alias={tavern:/(tavern|inn|mourning bell|marta|bar\b)/,market:/(market|blackthorn|vale)/,apothecary:/(apothecary|gale|shop|tonic)/,clocktower:/(clock|tower|bells?\b)/,library:/(library|archive|sable)/,theater:/(theat|bloodmoon|cantor|stage)/,cathedral:/(cathedral|church|varric)/,cemetery:/(cemetery|grave)/,observatory:/(observatory|orrery|dome)/,bridge:/(bridge|canal)/,hollow:/(hollow|raven|slum|pike)/,sewers:/(sewer|grate|underground)/,catacombs:/(catacomb|bones|crypt)/,seals:/(seal|ritual)/,ashen:/(square|ashen|fountain)/};
+ for(const id of cands){if(alias[id]&&alias[id].test(t))return id;if(t.includes(locName(id).toLowerCase().replace(/^the /,'')))return id}
+ return null;
+}
+function npcHere(t){const here=[...(loc().npcs||[])];const named=here.find(n=>t.includes(n.toLowerCase().split(' ').pop())||t.includes(n.toLowerCase()));return named||(here.length&&/(talk|speak|ask|greet|chat|tell|question)/.test(t)?here[0]:null)}
+function suspectIn(t){return Object.keys(SUSPECTS).find(k=>t.includes(SUSPECTS[k].name.toLowerCase().split(' ').pop())||t.includes(k))}
+function offlineSuggestions(){
+ const out=[],l=loc(),site=S.case.spots[S.loc];
+ if(S.loc==='ashen'&&!S.quests.length)out.push('Talk to Constable Thorn');
+ if(site&&!site.found)out.push(npcPresent('Nell')&&S.loc===nellSite()?'Question Nell the witness':S.loc==='hollow'?'Pay Pike for information':'Investigate the scene');
+ (l.npcs||[]).filter(n=>!(S.loc==='ashen'&&n==='Nell')&&!(S.loc==='hollow'&&n==='Pike')).slice(0,1).forEach(n=>out.push(`Talk to ${n}`));
+ const sHere=Object.keys(SUSPECTS).find(k=>suspectHere(k)&&!S.case.statements[k]);if(sHere)out.unshift(`Ask ${SUSPECTS[sHere].name} for an alibi`);
+ if(S.case.evidence.some(e=>!e.analyzed))out.push('Open the Case board');
+ if(S.loc==='bridge'&&!S.known.includes('sewers'))out.push('Search for a way into the sewers');
+ if(S.loc==='cathedral'&&!S.known.includes('cemetery'))out.push('Go to the cemetery');
+ if(S.loc==='cemetery'&&!S.known.includes('observatory'))out.push('Climb to the observatory');
+ if(S.case.accused&&!S.case.solved){if(S.loc==='sewers')out.push('Go to the Bone Catacombs');if(S.loc==='catacombs')out.push('Go to the Seven Seals')}
+ (l.exits||[]).filter(e=>S.known.includes(e)).slice(0,2).forEach(e=>out.push(`Go to ${locName(e).replace(/^The /,'')}`));
+ return [...new Set(out)].slice(0,4);
+}
+async function trySite(site,skill,reason){
+ const sp=S.case.spots[site];if(!sp||sp.found)return false;
+ const r=await check(skill||CLUE_SITES[site].skill,CLUE_SITES[site].dc,{reason:reason||'Search for evidence'});
+ if(r.success){revealClue(site,CLUE_SITES[site].how);return true}
+ return r;
+}
+async function offlineTurn(raw){
+ const t=raw.toLowerCase().trim();const here=S.loc,l=loc();
+ if(S.combat){
+  if(/(tonic|potion|drink|heal)/.test(t))return doCombat('potion');
+  if(/(flee|run|escape|retreat)/.test(t))return doCombat('flee');
+  if(/(dodge|defend|block|guard)/.test(t))return doCombat('dodge');
+  if(/(bind|shackle|capture|subdue|arrest)/.test(t))return doCombat('bind');
+  if(/(hex|curse)/.test(t)&&cls().spell)return doCombat('spell');
+  if(/(cast|spell|magic|blast|bolt|flame|mock)/.test(t)&&cls().cantrip)return doCombat('cantrip');
+  if(/(hide|sneak)/.test(t)&&cls().feature?.id==='hide')return doCombat('feature');
+  if(/(attack|hit|strike|stab|slash|swing|fight|cane)/.test(t))return doCombat('attack');
+  const r=await check(/(shove|push|grapple|kick|throw|tackle|trip)/.test(t)?'Athletics':/(trick|feint|distract|lie)/.test(t)?'Deception':/(scare|roar|threat)/.test(t)?'Intimidation':'Acrobatics',13,{reason:'Improvised manoeuvre'});
+  const tg=S.combat.enemies[S.combat.target];
+  if(r.success){const d=rollExpr('1d6+'+Math.max(0,am('STR')));addLog('combat',`Your gambit works! ${tg.name} reels.`);addLog('roll','Damage '+d.text);damage(tg,d.total,'You hit');tg.mocked=true}else addLog('combat','It doesn’t go as planned, and leaves you exposed.');
+  if(!checkVictory())await enemyTurn();return;
+ }
+ // ---- movement
+ const go=/^(go|travel|walk|head|enter|leave|return|run|move|visit|climb to|take the carriage)\b|^to /.test(t)||/go (to|back)|head (to|for)/.test(t);
+ if(go){const dest=findLocIn(t);if(dest&&dest!==here){if(!(l.exits||[]).includes(dest)&&!S.known.includes(dest)){addLog('gm','You don’t know the way there yet.');return}if(!(l.exits||[]).includes(dest)){addLog('sys',`${locName(dest)} isn’t connected to ${l.name}. Exits: ${(l.exits||[]).filter(e=>S.known.includes(e)).map(locName).join(', ')}.`);return}await moveTo(dest);S.suggestions=offlineSuggestions();return}
+  if(/(leave|back|return)/.test(t)&&l.exits?.length){await moveTo(S.prevLoc&&l.exits.includes(S.prevLoc)?S.prevLoc:l.exits[0]);S.suggestions=offlineSuggestions();return}
+  if(dest===null&&/(cemetery|observatory|sewer)/.test(t)){addLog('gm','You don’t know the way there yet. Ask around — or search for it.');return}
+  addLog('gm',`From here you can go to: ${(l.exits||[]).filter(e=>S.known.includes(e)).map(locName).join(', ')}.`);return}
+ if(/^(look|l|describe|where|observe|survey)\b|look around/.test(t)){addLog('gm',l.desc+((l.npcs||[]).length?`\n\nHere: ${l.npcs.join(', ')}.`:'')+`\nExits: ${(l.exits||[]).filter(e=>S.known.includes(e)).map(locName).join(', ')}.`);return}
+ // ---- prologue hooks
+ if(here==='ashen'&&/(carriage|seal)/.test(t)&&!S.flags.carriage){S.flags.carriage=true;const r=await check('Investigation',10,{reason:'Inspect the carriage and its seal'});addLog('gm',r.success?'The carriage bears the Watch crest — Thorn sent it. Under the seat, a folded Watch map of the old city: someone has circled the Weeping Bridge sewer grate in red ink.':'A Watch carriage, damp and ordinary. The driver eyes you and says nothing.');if(r.success){remember('A Watch map circles the sewer grate under Weeping Bridge');gainXP(10)}return}
+ if(here==='ashen'&&/(hooded|stranger|follow)/.test(t)&&!S.flags.stranger){S.flags.stranger=true;const r=await check('Stealth',12,{reason:'Follow the hooded stranger'});
+  if(r.success){addLog('gm','You trail the hooded figure through three alleys and across Weeping Bridge, into the crooked lanes of Raven’s Hollow, where they vanish into a gin-shop. A man in the doorway grins at you. “Pike,” he says. “Friend of the hooded folk. For a price, friend of yours.”');discover('hollow');S.prevLoc=S.loc;S.loc='bridge';discover('bridge');await moveTo('hollow',{quiet:true});S.suggestions=['Pay Pike for information','Look around','Go to Weeping Bridge']}
+  else{addLog('gm','The stranger turns. Under the hood: a halo of chalk drawn on a pale forehead. A knife flashes.');startCombat(['cultist'])}return}
+ if(/(cathedral bells|study the bells|bell tower)/.test(t)&&here==='ashen'){await moveTo('clocktower');S.suggestions=offlineSuggestions();return}
+ // ---- shopping
+ const shop=SHOPS[here];
+ if(/(buy|purchase|shop|wares|sell)/.test(t)&&!/pike/.test(t)){if(!shop){addLog('gm','There’s no one here to trade with.');return}
+  const want=Object.keys(ITEMS).find(n=>shop.items.includes(n)&&t.includes(n.toLowerCase().split(' ')[0].replace(/[()&]/g,'')));
+  if(!want){addLog('gm',`${shop.keeper} lists the wares: ${shop.items.map(n=>`${n} (${ITEMS[n].price}g)`).join(', ')}. (Open the Bag tab to buy.)`);panelTab='bag';return}
+  return buy(want)}
+ // ---- rest
+ if(/(long rest|sleep|rent a room|stay the night|bed)/.test(t))return longRest(/rent|room|inn/.test(t)||here==='tavern');
+ if(/(short rest|rest|catch my breath|bandage)/.test(t))return shortRest();
+ if(/^(use|drink|quaff|apply)\b/.test(t)){const it=S.char.inv.find(i=>i.qty>0&&t.includes(i.name.toLowerCase().split(' ')[0]));if(it)return useItem(it.name);addLog('gm','You search your coat, but don’t find that.');return}
+ // ---- Pike
+ if(here==='hollow'&&/(pike|pay|bribe|coin|information|informant)/.test(t)){
+  meet('Pike');const sp=S.case.spots.hollow;
+  if(sp.found){addLog('gm','“I sold you all I had, friend. Come back when the city’s told me something new.”');return}
+  const price=S.flags.pikePrice||10;
+  if(/(pay|bribe|coin|gold)/.test(t)){if(S.char.gold<price){addLog('gm',`Pike looks at your purse and laughs. “${price} gold, friend.”`);return}gainGold(-price);npcNote('Pike','Paid for information',1);revealClue('hollow',CLUE_SITES.hollow.how);return}
+  const sk=/(threat|intimidat|scare)/.test(t)?'Intimidation':'Persuasion';const r=await trySite('hollow',sk,'Get Pike talking without paying');if(r!==true){addLog('gm',`“${S.flags.pikePrice||10} gold,” Pike repeats.`);if(0)addLog('gm','“Ten gold,” Pike repeats. “Friendship’s extra.”');npcNote('Pike','Refused to talk for free',sk==='Intimidation'?-1:0)}return}
+ // ---- Nell
+ if(npcPresent('Nell')&&/(nell|witness|flower)/.test(t)){
+  meet('Nell');const ns=nellSite(),sp=S.case.spots[ns];
+  if(!sp||sp.found){addLog('gm','**Nell:** “I told you everything. Please — just catch them.”');return}
+  addLog('gm','**Nell:** “I don’t want trouble. I already saw too much of it.” She won’t meet your eyes.');
+  const sk=/(threat|intimidat)/.test(t)?'Intimidation':/(persuade|convince|kind|calm|reassure)/.test(t)?'Persuasion':'Insight';
+  const r=await trySite(ns,sk,'Earn the witness’s trust');if(r!==true){addLog('gm','Nell shakes her head and busies herself with her flowers. Maybe later — or with a gentler approach.');npcNote('Nell','Too frightened to talk yet',sk==='Intimidation'?-1:0)}else npcNote('Nell','Told you what she saw',1);return}
+ // ---- alibis & confrontations
+ const sk=suspectIn(t);
+ if(sk&&suspectHere(sk)&&/(alibi|where were|whereabouts|murder night|that night|account)/.test(t)){if(!takeStatement(sk))addLog('gm',`${SUSPECTS[sk].name} repeats the same account, word for word.`);return}
+ if(sk&&/(confront|present|show|contradict|catch)/.test(t)){panelTab='case';openSide();addLog('sys',S.case.statements[sk]?`Choose the contradicting evidence in ${SUSPECTS[sk].name}’s statement on the Case board.`:`First ask ${SUSPECTS[sk].name} for an alibi.`);return}
+ // ---- reading a suspect
+ if(sk&&/(read|insight|watch|study|lying|lie|nervous|sense|motive|face)/.test(t)){
+  const s=SUSPECTS[sk];if(!suspectHere(sk)){addLog('gm',`${s.name} isn’t here.`);return}
+  if(S.case.read[sk]){addLog('gm',`You’ve already taken ${s.name}’s measure: ${S.case.read[sk]}.`);return}
+  const r=await check('Insight',15,{reason:`Read ${s.name}`});
+  const guilty=sk===S.case.culprit;
+  S.case.read[sk]=r.success?(guilty?'hiding something terrible':'nervous, but not about the murders'):'unreadable';
+  addLog('gm',r.success?(guilty?`${s.name} answers every question perfectly. Too perfectly. Their pulse jumps when you mention the seventh bell.`:`${s.name} is hiding something — but it’s small and shabby and human. Not this.`):`${s.name} gives you nothing. A closed book.`);
+  npcNote(s.name,`You tried to read them: ${S.case.read[sk]}`);return}
+ // ---- talking
+ const npc=npcHere(t);
+ if(npc&&/(talk|speak|ask|greet|chat|tell|hello|hi\b|say|question)/.test(t)||npc&&t.split(' ').length<4)return talk(npc,t);
+ if(/(persuade|convince|charm|intimidate|threaten|lie|deceive|bluff|bribe)/.test(t)){const who=npcHere(t)||(l.npcs||[])[0];if(!who){addLog('gm','There’s no one here to sway.');return}
+  const skk=/(intimidate|threat)/.test(t)?'Intimidation':/(lie|deceive|bluff)/.test(t)?'Deception':'Persuasion';const r=await check(skk,13,{reason:`Sway ${who}`});
+  npcNote(who,`You tried ${skk.toLowerCase()} — ${r.success?'it worked':'it failed'}`,r.success?(skk==='Intimidation'?0:1):-1);
+  addLog('gm',r.success?`${who} considers you, then gives a small nod. “Fine. You’ve made your point.”`:`${who}’s face closes like a door. “We’re done here.”`);
+  if(r.success&&S.case.spots[here]&&!S.case.spots[here].found&&Math.random()<0.5)revealClue(here,`${who} glances around, then lowers their voice and tells you about something they found:`);return}
+ // ---- magic sense
+ if(/(cast reveal|reveal|detect magic|sense magic|grimoire|arcane sight)/.test(t)){
+  const sp=S.case.spots[here];
+  if(sp&&!sp.found){const r=await trySite(here,'Arcana','Cast Reveal: trace lingering ritual magic');if(r!==true)addLog('gm','Your grimoire’s ward-lines flicker, then fade. Something here — but you can’t pin it down.');return}
+  addLog('gm',S.case.accused&&!S.case.solved?'Your Reveal blazes violet toward the ground. Down. Always down — the sewers.':'Your Reveal finds only the city’s ordinary old ghosts here.');return}
+ // ---- investigation
+ if(/(search|investigate|examine|inspect|look for|track|follow|study|check|scene|dust|clue)/.test(t)||/(listen|perceive|watch|spot|scan)/.test(t)){
+  if(here==='bridge'&&!S.known.includes('sewers')){const r=await check('Investigation',10,{reason:'Find a way under the bridge'});if(r.success){addLog('gm','The sewer grate beneath the bridge has been forced and reset. Fresh chalk on the ladder — a broken halo.');linkExit('bridge','sewers');discover('sewers')}else addLog('gm','Rain, rust, and river-stink. Nothing yet.');return}
+  if(here==='cathedral'&&!S.known.includes('cemetery')){discover('cemetery');addLog('gm','The side door stands ajar, its lock smeared with grave-dirt. Beyond: the Forgotten Cemetery, where the three victims were buried this week.');return}
+  if(here==='cemetery'&&!S.known.includes('observatory')){discover('observatory');addLog('gm','Fresh footprints lead from the newest grave up the hill toward the abandoned observatory.');}
+  const sp=S.case.spots[here];
+  if(sp&&!sp.found){
+   const skill=here==='theater'&&/(search|examine|inspect|investigate)/.test(t)?'Perception':here==='clocktower'&&/(climb)/.test(t)?'Athletics':null;
+   const r=await trySite(here,skill,'Search the scene');
+   if(r!==true){addLog('gm',pick(['Something is here — you can feel it — but it slips past you this time.','You find nothing yet. The scene is older than it looks.','Close, but not close enough. You might try a different approach.']));if(r.fumble){addLog('gm','And your search hasn’t gone unnoticed.');if(loc().enc)startCombat([pick(loc().enc)]);else tollBell('alarm')}}
+   return}
+  if(!S.secrets['coins_'+here]&&!l.safe){const r=await check('Perception',12,{reason:'Search carefully'});S.secrets['coins_'+here]=true;if(r.success){addLog('gm',pick(['Tucked behind a loose stone: someone’s hidden purse.','In the gutter, a glint — a forgotten coin-roll.']));gainGold(rnd(10)+5)}else addLog('gm','You search thoroughly, but turn up nothing new.');return}
+  addLog('gm','You’ve already combed this place. Whatever secrets remain here, they aren’t lying in plain sight.');return}
+ // ---- hunting trouble
+ if(/(seek encounter|explore|patrol|hunt|look for trouble|fight)/.test(t)&&l.enc){const m=pick(l.enc);addLog('gm',`You go looking for trouble in the fog, and trouble finds you: a ${MONSTERS[m].name.toLowerCase()}!`);startCombat([m]);return}
+ if(/(accuse)/.test(t)){panelTab='case';openSide();addLog('sys','Make your accusation on the Case board — you’ll need three analyzed pieces of evidence against one suspect.');return}
+ if(/(contract|work|bounty)/.test(t)&&here==='ashen'&&S.case.solved){if(S.bounty){addLog('gm',`Thorn taps the paper. “The ${S.bounty.enemyName.toLowerCase()} at ${locName(S.bounty.loc)}. Still waiting.”`);return}const opts=[['ghoul','cemetery'],['wraith','bridge'],['fanatic','catacombs'],['cutpurse','hollow']].filter(o=>S.known.includes(o[1]));const [en,lc]=pick(opts);S.bounty={enemy:en,enemyName:MONSTERS[en].name,loc:lc,reward:30+rnd(4)*10};addLog('gm',`Thorn slides a Watch contract across: **${MONSTERS[en].name}** at ${locName(lc)}. ${S.bounty.reward} gold.`);return}
+ const guess=[[/(climb|jump|lift|break|force|push|swim)/,'Athletics'],[/(balance|tumble|flip)/,'Acrobatics'],[/(steal|pickpocket|pick.*lock|lockpick|palm)/,'Sleight of Hand'],[/(sneak|hide|creep)/,'Stealth'],[/(magic|arcane|rune|spell|cast|ward)/,'Arcana'],[/(history|remember|recall|legend|record)/,'History'],[/(heal|treat|wound|medic|autopsy|body|corpse)/,'Medicine'],[/(sing|play|perform|dance)/,'Performance'],[/(animal|raven|dog|horse)/,'Animal Handling'],[/(sense|motive|read)/,'Insight'],[/(god|holy|divine|pray)/,'Religion']].find(g=>g[0].test(t));
+ if(guess){const r=await check(guess[1],12,{reason:raw});
+  if(guess[1]==='Performance'&&here==='tavern'&&r.success&&S.flags.playedDay!==S.day){S.flags.playedDay=S.day;addLog('gm','The Mourning Bell falls quiet, then roars. Coins land in your hat.');gainGold(rnd(8)+2);return}
+  if(guess[1]==='Religion'&&r.success&&S.flags.prayDay!==S.day&&['cathedral','cemetery'].includes(here)){S.flags.prayDay=S.day;S.char.blessed=true;addLog('gm','A stillness settles over you. You feel **Inspired** — advantage on your next check.');return}
+  if(guess[1]==='Medicine'&&r.success){heal(rnd(4)+1,'First aid');return}
+  addLog('gm',r.success?pick(['You manage it neatly.','It works.','Done — and no one the wiser.']):pick(['It doesn’t quite work out.','You fumble it.','Not this time.']));return}
+ addLog('gm',pick(['The rain waits for you to decide. (Try: look, go to <place>, talk to <name>, investigate, read <suspect>, cast reveal, rest, buy.)','You consider that. (The Classic GM understands common investigator actions — switch to the AI Game Master in Options for total freedom.)']));
+}
+async function talk(npc,t){
+ const n=NPCS[npc];const m=meet(npc,n?.role);
+ if(npc==='Nell')return offlineTurn('question nell the witness');
+ if(npc==='Pike')return offlineTurn('ask pike for information');
+ if(!n){addLog('gm',`${npc} regards you in silence.`);return}
+ const first=!m.notes.length;
+ let line=null;for(const [re,ans] of n.topics){if(re.test(t)){line=ans;break}}
+ if(!line){line=first?n.greet:n.idle;if(npc==='Constable Thorn'&&!S.quests.length){addLog('gm',`**${npc}:** ${line}`);if(first)npcNote(npc,'Met in Ashen Square');line='case'}}
+ if(line==='case'){
+  if(!S.quests.some(q=>q.title==='The Broken Halo Murders')){line='“The Order of the Broken Halo. Dissolved two hundred years ago, so the histories say. Someone disagrees. Find who leads them before the seventh bell — I don’t know what happens then, and I don’t want to.” He hands you a list. “Five names. Brother Varric. Madame Vale. Archivist Sable. The Masked Cantor at the Bloodmoon. And me. I was on duty every murder night. Don’t pretend you weren’t going to ask.”';addQuest('The Broken Halo Murders','Find the leader of the Order of the Broken Halo before the seventh bell. Suspects: Brother Varric, Madame Vale, Archivist Sable, the Masked Cantor — and Constable Thorn.');npcNote(npc,'Gave you the case and five suspects — including himself');remember('Thorn named five suspects, himself among them')}
+  else line=S.case.accused?'“Then go. Down there. Before the last bell.”':`“${S.case.evidence.length?`${S.case.evidence.length} pieces of evidence. Good. Keep going.`:'Start with the witness — Nell, by the fountain.'}”`}
+ if(line==='suspects')line='“Varric. Vale. Sable. The Cantor. And me. Don’t look so surprised.”';
+ if(line==='rumor')line=pick(RUMORS);
+ if(line==='shop'){panelTab='bag';line='“Look all you like.” Mother Gale gestures at her shelves. (Open the Bag tab to buy.)'}
+ if(first&&npc!=='Constable Thorn')npcNote(npc,'Met at '+locName(S.loc));
+ addLog('gm',`**${npc}:** ${line}`);
+ const sKey=Object.keys(SUSPECTS).find(x=>SUSPECTS[x].name===npc);if(sKey&&!S.case.statements[sKey]&&(npc!=='Constable Thorn'||S.quests.length))takeStatement(sKey);
+ S.suggestions=offlineSuggestions();
+}
+function buy(name){const d0=ITEMS[name];if(!d0||!d0.price)return;const d=Object.assign({},d0,{price:Math.round(d0.price*(S.loc==='apothecary'&&S.flags.galeMarkup||1))});if(S.char.gold<d.price){addLog('gm','You can’t afford that.');return}
+ if(name==='Silvered Edge'){if((S.char.weaponBonus||0)>=1){addLog('gm','Mother Gale snorts. “It’s as silver as it’ll get.”');return}gainGold(-d.price);S.char.weaponBonus=1;addLog('gm',`Mother Gale paints your ${cls().weapon.name} with hissing silver. (+1 to hit and damage)`);return}
+ if(name==='Warding Talisman'&&hasItem(name)){addLog('gm','One talisman is all the wards will hold.');return}
+ gainGold(-d.price);giveItem(name);addLog('gm',pick(['“Pleasure.”','“Don’t die with it unused.”','“Sensible.”']))}
+function useItem(name){const it=S.char.inv.find(i=>i.name===name&&i.qty>0);if(!it)return;const d=ITEMS[name]||it;
+ if(d.heal){const r=rollExpr(d.heal);addLog('roll',`${name} ${r.text}`);it.qty--;if(it.qty<=0)S.char.inv.splice(S.char.inv.indexOf(it),1);heal(r.total,name);return}
+ addLog('gm',`You turn the ${name} over in your hands. ${d.desc||''}`)}
+async function shortRest(){const c=S.char,C=cls();if(S.combat){addLog('sys','Not in the middle of a fight!');return}
+ tick(6);if(C.feature?.rest==='short')c.feat=C.feature.max;if(C.pact)c.slots=slotsMax(c.lvl);
+ if(c.hitDice>0&&c.hp<c.maxHp){c.hitDice--;const r=rollExpr('1d'+C.hd+(am('CON')?sgn(am('CON')):''));addLog('roll','Hit Die '+r.text);heal(r.total,'Short rest')}else addLog('sys','You rest for an hour.');
+ addLog('gm',pick(['You find a dry doorway, light your pipe, and let your heartbeat slow.','An hour passes in the rain. Your hands stop shaking.'])+(C.pact?' Your pact magic returns.':''));
+ if(loc().wild&&Math.random()<0.15){addLog('gm','Your rest is interrupted!');startCombat([pick(loc().enc)])}}
+async function longRest(paid){const c=S.char,C=cls();if(S.combat){addLog('sys','Not in the middle of a fight!');return}
+ if(S.loc==='tavern'&&paid){if(c.gold<5){addLog('gm','Old Marta raises an eyebrow. “Five gold, investigator.”');return}gainGold(-5)}
+ else if(!loc().safe&&!loc().wild){addLog('gm','This is no place to sleep. The Mourning Bell has rooms.');return}
+ if(loc().wild&&Math.random()<0.35){addLog('gm','Deep in the night, you wake to movement in the dark—');startCombat([pick(loc().enc)]);return}
+ const toDawn=36-(S.turn%36);tick(toDawn);
+ c.hp=c.maxHp;c.slots=slotsMax(c.lvl);if(C.feature?.max)c.feat=C.feature.max;c.hitDice=Math.min(c.lvl,c.hitDice+Math.max(1,Math.floor(c.lvl/2)));c.relentlessUsed=false;
+ addLog('place',`Night ${S.day} — Dawn`);addLog('gm',S.loc==='tavern'?'You sleep under the Mourning Bell’s stopped clocks and wake to rain and the smell of bread.':'You sleep badly, one hand on your grimoire, and wake stiff but restored.');addLog('loot','Fully rested: HP, spell slots and abilities restored.');}
+
+/* =========================================================
+   AI GAME MASTER (Claude via the page's sample capability)
+========================================================= */
+function initAI(){
+ const tryUse=()=>{if(!(window.claude&&typeof window.claude.use==='function'))return false;
+  window.claude.use('sample').then(fn=>{sampleFn=fn||null;aiState=fn?'ready':'unavailable';updateAINote();render()}).catch(()=>{aiState='unavailable';updateAINote()});return true};
+ if(!tryUse())setTimeout(()=>{if(!tryUse()){aiState='unavailable';updateAINote()}},1500);
+}
+function updateAINote(){
+ const n=$('#aiNote');
+ if(aiState==='ready')n.textContent=settings.mode==='ai'?'✦ AI Game Master is ready.':'✦ AI Game Master available (enable in Options).';
+ else if(aiState==='checking')n.textContent='Checking for the AI Game Master…';
+ else n.textContent='Classic Game Master active (AI GM not available here).';
+ $('#oModeNote').textContent=aiState==='ready'?'The AI GM improvises freely; the rules engine still enforces dice, HP and evidence.':'The AI GM isn’t available in this view, so the Classic GM will run your game.';
+}
+function useAI(){return settings.mode==='ai'&&!!sampleFn}
+function gmContext(){
+ const c=S.char,C=cls(),l=loc(),site=S.case.spots[S.loc];
+ return {
+  character:{name:c.name,ancestry:c.race,discipline:c.cls,background:c.bg,level:c.lvl,hp:`${c.hp}/${c.maxHp}`,ac:calcAC(),gold:c.gold,
+   abilities:Object.fromEntries(ABIL.map(a=>[a,`${c.abil[a]} (${sgn(mod(c.abil[a]))})`])),trainedSkills:c.skills,
+   attacks:[`${C.weapon.name} ${sgn(weaponAtk())} ${weaponDmg()}`].concat(C.cantrip?[`${C.cantrip.name} ${cantripDice()}`]:[]),spell:C.spell?`${C.spell.name} (${c.slots} slots)`:null,
+   inventory:c.inv.filter(i=>i.qty>0).map(i=>i.name+(i.qty>1?' x'+i.qty:'')),conditions:[c.blessed&&'inspired',c.hidden&&'hidden'].filter(Boolean)},
+  location:{id:S.loc,name:l.name,description:l.desc,exits:(l.exits||[]).map(id=>({id,name:locName(id),known:S.known.includes(id)})),npcsHere:l.npcs||[],
+   unfoundEvidenceHere:!!(site&&!site.found),evidenceHint:site&&!site.found?`Clue site — best found with ${CLUE_SITES[S.loc].skill} (DC ${CLUE_SITES[S.loc].dc}) or a clever alternative. What is hidden here: ${site.t}`:null},
+  time:`Night ${S.day}, ${timeName()}`,bellsTolled:`${S.bells} of 7`,
+  case:{accusedAndUnmasked:S.case.accused?SUSPECTS[S.case.accused].name:null,solved:S.case.solved,
+   evidenceFound:S.case.evidence.map(e=>({text:e.t,analyzed:e.analyzed,pointsTo:e.explained?`explained (${SUSPECTS[e.s].name}'s private secret)`:e.analyzed?SUSPECTS[e.s].name:'not yet analyzed'})),
+   statements:Object.fromEntries(Object.entries(S.case.statements||{}).map(([k,v])=>[SUSPECTS[k].name,{alibi:SUSPECTS[k].statement,broken:v.broken}])),
+   theOrdersMoves:S.case.moves||[],methodKnown:S.case.methodKnown,motiveKnown:S.case.motiveKnown,
+   suspects:Object.values(SUSPECTS).map(s=>`${s.name} — ${s.role}`),insightReads:S.case.read},
+  SECRET_FOR_GM_ONLY:{culprit:SUSPECTS[S.case.culprit].name,motive:SUSPECTS[S.case.culprit].motive},
+  leads:S.quests.map(q=>`${q.done?'[DONE] ':''}${q.title}: ${q.desc}`),
+  npcMemory:Object.fromEntries(Object.entries(S.npcs).map(([n,v])=>[n,{attitude:attName(v.att),role:v.role,notes:v.notes.slice(-4)}])),
+  caseNotes:S.memory.slice(-20),
+  combat:S.combat?{round:S.combat.round,enemies:S.combat.enemies.map((e,i)=>({index:i,name:e.name,hp:`${e.hp}/${e.maxHp}`,ac:e.ac,defeated:e.hp<=0}))}:null,
+  recentEvents:S.history.slice(-14)
+ };
+}
+const WORLD_BIBLE=`SETTING: Vesperhollow, a rain-soaked gothic city of black towers. The player is a retired occult investigator, once the Crown's foremost magical detective, who resigned when superiors buried the truth about the Order of the Broken Halo. Three ritual murders in three nights, each marked with a broken halo; someone rings the city's seven old bells at the thirteenth hour. One bell tolls each dawn; at seven the cult's rite completes.
+PLACES: Ashen Square (hub; Constable Thorn; Nell the frightened flower-seller witness), the Mourning Bell Tavern (Old Marta, safe rooms), Blackthorn Market (Madame Vale's violet tent), the Apothecary (Mother Gale's shop), the Clocktower, the Whispering Library / City Archives (Archivist Sable), the Bloodmoon Theater (the Masked Cantor, who speaks in song), the Old Cathedral (Brother Varric) and the Forgotten Cemetery behind it, the Void Observatory beyond the cemetery, Weeping Bridge over the canal, Raven's Hollow slums (Pike the informant, sells secrets for 10 gold), the Old Sewers beneath the bridge, the Bone Catacombs, and the Seven Seals ritual chamber (only reachable after the culprit is unmasked).
+SUSPECTS: Brother Varric, Madame Vale, Constable Thorn (who hired the player and admits he is a suspect), Archivist Sable, the Masked Cantor. Exactly one leads the Order (see SECRET_FOR_GM_ONLY). Play the culprit as plausible and guarded, never confessing; give each innocent suspect a small, human secret of their own as a red herring.
+UNUSED LOCATION ART you may attach to new places (by number): ${ART_NAMES.map((n,i)=>`${i+1} ${n}`).filter((x,i)=>![1,2,3,4,5,8,9,10,11,22,24,35,37,39].includes(i+1)).join('; ')}.
+KNOWN LOCATION IDS: ${Object.keys(WORLD).join(', ')}.`;
+function gmSystem(){
+ const len={short:'1-3 sentences',medium:'3-5 sentences',long:'5-8 sentences'}[settings.length]||'3-5 sentences';
+ return `You are the Game Master of "The Black Testament", a solo dark-fantasy investigation tabletop RPG using simplified 5th-edition-style d20 rules. Tone: ${settings.tone}. Difficulty: ${settings.difficulty}.
+${WORLD_BIBLE}
+GM RULES:
+- The player controls only their own character. Never decide what the investigator says, feels or does beyond the action they stated.
+- Fair-play mystery: NEVER reveal the culprit's identity directly, and never let a suspect confess before the accusation. Hard evidence comes ONLY through "revealClue". When the player succeeds at a meaningful search, interrogation or deduction at a location where unfoundEvidenceHere is true, set "revealClue": true — the engine adds the exact physical clue described in evidenceHint. You may describe how it is found but do not name which suspect it implicates. Atmosphere, NPC behaviour and Insight reads may hint honestly.
+- ALIBIS: when the player asks a suspect who is present where they were on the murder nights (and no statement is recorded yet), have them give their alibi in your narration, matching the canonical alibi text in their statement, and set "takeStatement": "<suspect name>". Contradictions are resolved by the engine when the player presents evidence on the Case board; do not resolve them yourself.
+- THE ORDER ACTS: theOrdersMoves lists what the cult has done to stop the player (scrubbed scenes, threatened witnesses, sent killers, bought informants). Reflect these in the world.
+- Accusations happen on the Case board, not in narration. If the player accuses in words, have the suspect bluster and remind them they need proof.
+- Play every NPC as a distinct person with goals, using npcMemory and attitude so they remember past dealings. React to the investigator's background and discipline when it fits.
+- If an outcome is uncertain AND failure would be interesting, request exactly ONE check instead of resolving it. Skills: Athletics, Acrobatics, Sleight of Hand, Stealth, Arcana, History, Investigation, Nature, Religion, Animal Handling, Insight, Medicine, Perception, Survival, Deception, Intimidation, Performance, Persuasion; or an ability (STR, DEX, CON, INT, WIS, CHA). DCs: easy 10, medium 13, hard 15, very hard 18. Use advantage 1 / disadvantage -1 when justified. When you request a check, the narration only builds to the roll — never reveal the outcome.
+- Trivial actions succeed without a check; impossible ones fail without one.
+- Start combat (effects.combat) only when hostilities begin: cultists, ghouls, wraiths, hired thugs. Scale to level ${S.char.lvl}: hp 7-20, ac 11-15, atk +3..+5, dmg like "1d6+2", xp 25-200, at most 3 foes. Include "Cultist" in cult members' names. Never stage the final battle with the culprit — the engine does that at the Seven Seals.
+- A reckless failure that alerts the Order may set "bell": 1 (rarely; the bells are the case's clock).
+- Rewards are modest: xp 10-60 for good detective work, gold 0-30. Charge gold for bribes and purchases (negative gold). Damage outside combat is small: -1 to -8.
+- PG-13; violence non-graphic; horror through implication.
+- Narration: second person, present tense, ${len}, vivid noir detail, NPC dialogue in “curly quotes” (the Masked Cantor speaks in rhyming song). End on a hook. Never print game numbers — the engine shows them.
+- Suggestions: 3 short, distinct, imperative next actions (max 7 words each).
+OUTPUT: reply with ONLY one JSON object, no markdown:
+{"narration":"string","check":null | {"skill":"Investigation","dc":13,"advantage":0,"reason":"short phrase"},"effects":{"revealClue":false,"takeStatement":null,"bell":0,"hp":0,"gold":0,"xp":0,"addItems":[{"name":"","desc":"","heal":"2d4+2 only for healing items"}],"removeItems":[],"moveTo":"existing location id or null","newLocation":null | {"id":"snake_case","name":"","desc":"2-3 sentences","art":0},"quest":{"add":null | {"title":"","desc":""},"update":null | {"title":"","desc":""},"complete":null | "title"},"npc":[{"name":"","role":"short","note":"what they now remember about the investigator","attitudeChange":0}],"remember":"one key fact for the case notes, or empty","combat":null | {"enemies":[{"name":"","hp":10,"ac":13,"atk":4,"dmg":"1d6+2","xp":50}]},"enemyDamage":0,"endCombat":null | "escaped" | "surrendered"},"suggestions":["","",""]}
+Omit effect fields you do not use.`;
+}
+async function callGM(task){
+ const msg=gmSystem()+'\n\nGAME STATE:\n'+JSON.stringify(gmContext())+'\n\n'+task;
+ const r=await sampleFn(msg,{modelTier:'default',cache:false});
+ const j=parseJSON((r&&r.text)||'');if(!j||typeof j!=='object')throw Object.assign(new Error('bad json'),{code:'parse'});
+ return j;
+}
+function parseJSON(t){t=String(t).replace(/```(json)?/g,'');const a=t.indexOf('{'),b=t.lastIndexOf('}');if(a<0||b<a)return null;try{return JSON.parse(t.slice(a,b+1))}catch(e){return null}}
+function aiFail(e){
+ console.warn('AI GM error',e);
+ if(e&&e.code==='not_granted'){sampleFn=null;aiState='unavailable';addLog('sys','The AI Game Master wasn’t granted access, so the Classic GM takes over.');updateAINote()}
+ else if(e&&e.code==='rate_limited')addLog('sys','The AI Game Master needs a breather — the Classic GM handles this turn.');
+ else addLog('sys','The AI Game Master lost the thread — the Classic GM handles this turn.');
+}
+async function aiTurn(raw){
+ const wasCombat=!!S.combat;
+ thinking(true);
+ let res;
+ try{res=await callGM(`PLAYER ACTION: ${raw}\n${wasCombat?'This happens during combat (it uses the player’s turn). If it could hurt a foe, request a check; set enemyDamage only after a successful check.':''}\nDecide: resolve it directly, or request one check.`)}
+ catch(e){thinking(false);aiFail(e);return offlineTurn(raw)}
+ thinking(false);
+ const chk=validCheck(res.check);
+ if(chk){
+  if(res.narration)addLog('gm',String(res.narration).slice(0,1600));
+  const r=await check(chk.skill,chk.dc,{adv:chk.advantage,reason:chk.reason});
+  thinking(true,'The Game Master weighs the dice');
+  let out;
+  try{out=await callGM(`PLAYER ACTION: ${raw}\nYou requested a ${r.label} check (DC ${r.dc}) for: ${chk.reason}. RESULT: natural ${r.nat}, total ${r.total} — ${r.crit?'CRITICAL SUCCESS':r.fumble?'CRITICAL FAILURE':r.success?'SUCCESS':'FAILURE'}. Narrate the outcome that follows from this result and apply effects (revealClue only on success). Set "check" to null.`)}
+  catch(e){thinking(false);aiFail(e);addLog('gm',r.success?'Your effort pays off.':'It doesn’t go your way.');if(r.success&&S.case.spots[S.loc]&&!S.case.spots[S.loc].found)revealClue(S.loc,CLUE_SITES[S.loc].how);return}
+  thinking(false);
+  if(out.narration)addLog('gm',String(out.narration).slice(0,2000));
+  await applyEffects(out.effects||{},r.success);setSuggestions(out.suggestions);
+ }else{
+  if(res.narration)addLog('gm',String(res.narration).slice(0,2000));
+  await applyEffects(res.effects||{},true);setSuggestions(res.suggestions);
+ }
+ if(wasCombat&&S.combat&&!checkVictory())await enemyTurn();
+}
+function validCheck(c){if(!c||typeof c!=='object'||!c.skill)return null;return {skill:String(c.skill),dc:clamp(parseInt(c.dc)||13,5,25),advantage:clamp(parseInt(c.advantage)||0,-1,1),reason:String(c.reason||'').slice(0,90)}}
+async function applyEffects(e,allowClue){
+ if(!e||typeof e!=='object')return;
+ const num=(v,a,b)=>clamp(Math.round(+v||0),a,b);
+ if(e.revealClue===true&&allowClue&&S.case.spots[S.loc]&&!S.case.spots[S.loc].found)revealClue(S.loc);
+ if(Array.isArray(e.removeItems))e.removeItems.slice(0,5).forEach(n=>takeItem(n));
+ if(Array.isArray(e.addItems))e.addItems.slice(0,3).forEach(it=>{if(it&&it.name)giveItem(it.name,1,it)});
+ const g=num(e.gold,-500,40);if(g<0&&S.char.gold+g<0)addLog('sys','(Not enough gold.)');else if(g)gainGold(g);
+ const hp=num(e.hp,-8,12);if(hp>0)heal(hp);else if(hp<0)hurt(-hp);
+ const xp=num(e.xp,0,80);if(xp)gainXP(xp);
+ if(num(e.bell,0,1)===1)tollBell('alarm');
+ if(e.quest&&typeof e.quest==='object'){if(e.quest.add?.title)addQuest(e.quest.add.title,e.quest.add.desc);if(e.quest.update?.title)updateQuest(e.quest.update.title,e.quest.update.desc||'');if(e.quest.complete&&!/seventh seal|broken halo murders/i.test(e.quest.complete))completeQuest(e.quest.complete)}
+ if(Array.isArray(e.npc))e.npc.slice(0,4).forEach(n=>{if(n&&n.name){const nm=String(n.name).slice(0,40);meet(nm,String(n.role||'').slice(0,60));if(n.role&&!S.npcs[nm].role)S.npcs[nm].role=String(n.role).slice(0,60);npcNote(nm,n.note,clamp(parseInt(n.attitudeChange)||0,-1,1))}});
+ if(e.takeStatement){const k=Object.keys(SUSPECTS).find(x=>String(e.takeStatement).toLowerCase().includes(SUSPECTS[x].name.toLowerCase().split(' ').pop()));if(k&&suspectHere(k))takeStatement(k,true)}
+ if(e.remember)remember(e.remember);
+ if(e.newLocation&&e.newLocation.id&&e.newLocation.name){const id=String(e.newLocation.id).toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,30);if(!loc(id)){const art=clamp(parseInt(e.newLocation.art)||0,0,40);S.locs[id]={name:String(e.newLocation.name).slice(0,40),desc:String(e.newLocation.desc||'').slice(0,400),exits:[S.loc],custom:true,art:art||undefined,wild:true,enc:['cultist','wraith'],music:'Mystic & Dream'};linkExit(S.loc,id);discover(id)}}
+ if(e.moveTo&&loc(String(e.moveTo))&&String(e.moveTo)!==S.loc&&!S.combat){const id=String(e.moveTo);if(!(id==='seals'&&!S.case.accused)&&!(id==='catacombs'&&!S.known.includes('catacombs'))){if(!(loc().exits||[]).includes(id))linkExit(S.loc,id);await moveTo(id,{quiet:true,force:true})}}
+ if(S.combat){
+  const ed=num(e.enemyDamage,0,20);if(ed){const t=S.combat.enemies[S.combat.target];if(t)damage(t,ed,'Your gambit hits')}
+  if(e.endCombat&&!S.combat.enemies.some(x=>x.boss)){addLog('combat',e.endCombat==='escaped'?'You get away.':'The fight is over.');const xp2=e.endCombat==='escaped'?0:Math.floor(S.combat.enemies.filter(x=>x.hp>0).reduce((a,x)=>a+x.xp,0)/2);S.combat=null;if(xp2)gainXP(xp2)}
+ }
+ else if(e.combat&&Array.isArray(e.combat.enemies)&&e.combat.enemies.length){startCombat(e.combat.enemies.slice(0,3).map(x=>({name:x.name,hp:clamp(+x.hp||8,1,24+S.char.lvl*10),ac:x.ac,atk:clamp(+x.atk||3,0,4+S.char.lvl),dmg:x.dmg,xp:x.xp})))}
+}
+async function aiAsk(q){
+ thinking(true,'The Game Master leans back to answer');
+ try{const r=await sampleFn(`You are the friendly Game Master of a solo d20 gothic investigation RPG (5e-style rules). ${WORLD_BIBLE}\nThe player asks an out-of-character question. Answer helpfully in 1-4 sentences: explain rules plainly; you may hint where to look next, but NEVER reveal or hint at the culprit's identity. Plain text only.\nGAME STATE: ${JSON.stringify(Object.assign(gmContext(),{SECRET_FOR_GM_ONLY:undefined}))}\nQUESTION: ${q}`,{modelTier:'quick',cache:false});thinking(false);addLog('sys','GM (out of character): '+String(r.text||'').slice(0,900))}
+ catch(e){thinking(false);aiFail(e)}
+}
+function offlineAsk(q){const t=q.toLowerCase();let a;
+ if(/(where|next|stuck|what now|hint)/.test(t)){const left=unfoundSites();a=!S.quests.length?'Speak with Constable Thorn in Ashen Square.':S.case.accused&&!S.case.solved?'Under Weeping Bridge, through the sewers and catacombs, to the Seven Seals. Rest and buy tonics first.':S.case.evidence.some(e=>!e.analyzed)?'Analyze your evidence on the Case board.':left.length?`Evidence is still hidden at: ${left.map(locName).join(', ')}.`:'Check the Case board — you may be ready to accuse.'}
+ else if(/(dc|check|roll)/.test(t))a='Roll a d20, add your ability modifier (+ proficiency if the skill has a ● on your sheet). Meet or beat the DC.';
+ else if(/(bell)/.test(t))a='A bell tolls each dawn (and when the Order is alerted). At seven, the rite completes and the final foe grows stronger.';
+ else if(/(accuse|evidence)/.test(t))a='Analyze evidence on the Case board. Three analyzed pieces pointing at one suspect let you accuse.';
+ else if(/(rest|heal)/.test(t))a='A short rest spends a Hit Die. A long rest (the Mourning Bell is safest) restores everything — but a bell tolls at dawn.';
+ else a='Type what you do in plain words: look, go to a place, talk to someone, investigate, read <suspect>, cast reveal, rest, buy.';
+ addLog('sys','GM (out of character): '+a)}
+
+/* =========================================================
+   ACTION DISPATCH
+========================================================= */
+function lockUI(on){$('#cmdIn').disabled=on;$('#cmdGo').disabled=on;$$('#quick button,#combatActs button,#suggest button').forEach(b=>b.disabled=on)}
+async function act(raw){
+ raw=String(raw||'').trim();if(!raw||busy||!S)return;
+ finishTyping();
+ if(raw.startsWith('?')){busy=true;lockUI(true);addLog('you',raw);try{useAI()?await aiAsk(raw.slice(1)):offlineAsk(raw.slice(1))}finally{busy=false;lockUI(false);render()}return}
+ const t=raw.toLowerCase();
+ if(/^(help|commands)$/.test(t)){$('#helpModal').classList.remove('hidden');return}
+ if(/^(inventory|inv|bag|i)$/.test(t)){panelTab='bag';openSide();render();return}
+ if(/^(stats|sheet|character)$/.test(t)){panelTab='sheet';openSide();render();return}
+ if(/^(case|case board|open the case board|evidence|board|journal|quests?)$/.test(t)||/^(analy[sz]e( the| my)? evidence|review (the )?evidence)/.test(t)){panelTab='case';openSide();render();return}
+ if(/^(map)$/.test(t)){panelTab='map';openSide();render();return}
+ if(/^save$/.test(t)){autosave();addLog('sys','Game saved.');return}
+ const dm=/^(?:roll\s+)?(\d{0,2})d(4|6|8|10|12|20|100)([+-]\d+)?$/.exec(t);if(dm){const r=rollExpr((dm[1]||1)+'d'+dm[2]+(dm[3]||''));clack(3);addLog('roll','🎲 '+r.text);return}
+ busy=true;lockUI(true);addLog('you',raw);
+ try{
+  if(!S.combat&&/^(take a )?(long rest|sleep)|rent a room/.test(t))await longRest(/rent|room/.test(t)||S.loc==='tavern');
+  else if(!S.combat&&/^(take a )?short rest/.test(t))await shortRest();
+  else if(!S.combat&&/^accuse/.test(t)){panelTab='case';openSide();addLog('sys','Make your accusation on the Case board — three analyzed pieces of evidence against one suspect.')}
+  else if(useAI())await aiTurn(raw);
+  else await offlineTurn(raw);
+  if(S.combat&&S.combat.pending){S.combat.pending=false;await sleep(300);await enemyTurn()}
+  tick();
+ }catch(e){console.error(e);addLog('sys','Something went wrong resolving that action.')}
+ finally{busy=false;lockUI(false);render();autosave()}
+ if(matchMedia('(min-width:881px)').matches)$('#cmdIn').focus({preventScroll:true});
+}
+
+/* =========================================================
+   SAVE / LOAD
+========================================================= */
+function autosave(){if(!S||S.dead)return;store.set(SAVE_KEY,S)}
+function migrate(d){const c=d.case;c.statements=c.statements||{};c.moves=c.moves||[];return d}
+function load(){const d=store.get(SAVE_KEY);if(d&&d.char&&d.case){S=migrate(d);return true}return false}
+function exportCode(){try{return btoa(unescape(encodeURIComponent(JSON.stringify(S))))}catch(e){return ''}}
+function importCode(code){try{const d=JSON.parse(decodeURIComponent(escape(atob(code.trim()))));if(!d.char||!d.case)throw 0;S=migrate(d);return true}catch(e){return false}}
+
+/* =========================================================
+   CHARACTER CREATION
+========================================================= */
+const NAMES=['Silas Grave','Corvin Ashdown','Elspeth Marrow','Ambrose Vane','Isolde Crane','Lucan Thorne-Mercy','Mira Blackwood','Edmund Hale','Vesper Lyle','Octavia Rook','Hollis Wren','Cassius Morrow','Ada Quill','Bram Holloway','Nyx Embersong','Lenore Ashcombe','Gideon Fell','Sable Kinwright','Theo Lantern','Wilhelmina Crowe'];
+function crInit(){creatorState={race:'Human',cls:'Warlock Investigator',bg:'Former Crown Investigator',base:[15,14,13,12,10,8],assign:null,sel:null};assignByClass();$('#crName').value='';crRender()}
+function assignByClass(){const pr=CLASSES[creatorState.cls].prio;const sorted=[...creatorState.base].sort((a,b)=>b-a);creatorState.assign={};pr.forEach((a,i)=>creatorState.assign[a]=sorted[i])}
+function crScores(){const b=RACES[creatorState.race].bonus;return Object.fromEntries(ABIL.map(a=>[a,creatorState.assign[a]+(b[a]||0)]))}
+function crRender(){
+ const cs=creatorState;
+ $('#crClasses').innerHTML=Object.entries(CLASSES).map(([n,c])=>`<button class="card ${n===cs.cls?'sel':''}" data-cls="${n}"><b>${n}</b><small>d${c.hd} HP · ${c.prio[0]}<br>${c.desc}</small></button>`).join('');
+ $('#crRaces').innerHTML=Object.entries(RACES).map(([n,r])=>`<button class="card ${n===cs.race?'sel':''}" data-race="${n}"><b>${n}</b><small>${n==='Human'?'+1 all':Object.entries(r.bonus).map(([a,v])=>a+' +'+v).join(', ')}<br>${r.trait.split(' — ')[0]}</small></button>`).join('');
+ $('#crBgs').innerHTML=Object.entries(BACKGROUNDS).map(([n,b])=>`<button class="card ${n===cs.bg?'sel':''}" data-bg="${n}"><b>${n}</b><small>${b.skills.join(', ')}<br>${b.desc}</small></button>`).join('');
+ const sc=crScores();
+ $('#crAbil').innerHTML=ABIL.map(a=>`<button class="abil ${cs.sel===a?'sel':''}" data-ab="${a}"><div class="k">${a}</div><div class="v">${sc[a]}</div><div class="m">${sgn(mod(sc[a]))}</div></button>`).join('');
+ const C=CLASSES[cs.cls],fake={abil:sc};const hp=C.hd+mod(sc.CON)+(RACES[cs.race].hp||0);
+ const skills=[...new Set([...C.skills,...BACKGROUNDS[cs.bg].skills,...(RACES[cs.race].skills||[])])];
+ $('#crPreview').innerHTML=`<h3 style="margin:0 0 6px;color:var(--rose);font-size:16px">Dossier</h3>
+  <b>HP</b> ${hp} · <b>AC</b> ${C.ac(fake)} (${C.acNote}) · <b>Weapon</b> ${C.weapon.name} ${C.weapon.dmg}<br>
+  ${C.cantrip?`<b>Cantrip</b> ${C.cantrip.name} · `:''}${C.spell?`<b>Spell</b> ${C.spell.name} · `:''}${C.feature?`<b>Feature</b> ${C.feature.name}`:''}<br>
+  <b>Kit</b> Runic grimoire, Detective badge, Enchanted shackles, 2 Healing Tonics<br>
+  <b>Trait</b> ${RACES[cs.race].trait}<br><b>Trained skills</b><br>${skills.map(s=>`<span class="tag">${s}</span>`).join('')}`;
+}
+$('#creator').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||!creatorState)return;const cs=creatorState;
+ if(b.dataset.race){cs.race=b.dataset.race;crRender()}
+ if(b.dataset.cls){cs.cls=b.dataset.cls;assignByClass();crRender()}
+ if(b.dataset.bg){cs.bg=b.dataset.bg;crRender()}
+ if(b.dataset.ab){const a=b.dataset.ab;if(!cs.sel)cs.sel=a;else if(cs.sel===a)cs.sel=null;else{const t=cs.assign[a];cs.assign[a]=cs.assign[cs.sel];cs.assign[cs.sel]=t;cs.sel=null}crRender()}
+});
+$('#crArray').onclick=()=>{creatorState.base=[15,14,13,12,10,8];assignByClass();crRender()};
+$('#crRoll').onclick=()=>{clack(4);creatorState.base=Array.from({length:6},()=>{const r=[rnd(6),rnd(6),rnd(6),rnd(6)].sort((a,b)=>a-b);return r[1]+r[2]+r[3]});assignByClass();crRender()};
+$('#crRandName').onclick=()=>{$('#crName').value=pick(NAMES)};
+$('#crBack').onclick=()=>show('title');
+$('#crStart').onclick=()=>{
+ const cs=creatorState,C=CLASSES[cs.cls],sc=crScores();const name=($('#crName').value.trim()||pick(NAMES)).slice(0,24);
+ const maxHp=C.hd+mod(sc.CON)+(RACES[cs.race].hp||0);
+ const inv=[{name:'Runic grimoire',qty:1},{name:'Detective badge',qty:1},{name:'Enchanted shackles',qty:1},{name:'Healing Tonic',qty:2}];
+ const bi=BACKGROUNDS[cs.bg].item;if(!inv.some(i=>i.name===bi))inv.push({name:bi,qty:1,type:'misc',desc:'From your days as a '+cs.bg.toLowerCase()+'.'});
+ const c={name,race:cs.race,cls:cs.cls,bg:cs.bg,lvl:1,xp:0,abil:sc,maxHp,hp:maxHp,hitDice:1,skills:[...new Set([...C.skills,...BACKGROUNDS[cs.bg].skills,...(RACES[cs.race].skills||[])])],gold:20,inv,slots:0,feat:C.feature?.max||0,weaponBonus:0};
+ S=fresh(c);c.slots=slotsMax(1);startGame(true);
+};
+
+/* =========================================================
+   SCREENS & WIRING
+========================================================= */
+const PROLOGUE=`The rain has not stopped for three nights. Beneath the black towers of Vesperhollow, the Watch has discovered a series of ritual crimes bearing the same strange mark: a broken halo. The victims point to an old conspiracy. The city whispers of a killer from history, but you suspect someone is deliberately imitating the legend.
+
+You once served as the Crown’s foremost magical investigator. You resigned when your superiors buried the truth about the Order of the Broken Halo. Tonight, a letter arrives beneath your door.
+
+“Come to Ashen Square before the thirteenth bell. Bring your grimoire. Trust no one. — Constable Thorn”
+
+A carriage waits in the fog. Across the square, a frightened witness clutches a torn note. A hooded figure slips into an alley. Far away, the cathedral bell begins to ring. It is the third bell. There are seven.`;
+function show(id){['title','creator','game'].forEach(x=>$('#'+x).classList.toggle('hidden',x!==id));if(id==='title')updateContinue()}
+function updateContinue(){const d=store.get(SAVE_KEY);const b=$('#tContinue');const ok=d&&d.char&&d.case;b.disabled=!ok;b.textContent=ok?`Continue — ${d.char.name}, Lv ${d.char.lvl}`:'Continue Investigation'}
+function startGame(isNew){
+ show('game');logEl.innerHTML='';
+ if(isNew){
+  addLog('place','Prologue · The Thirteenth Bell');
+  addLog('gm',PROLOGUE);
+  addLog('place',locName('ashen'));meet('Constable Thorn');meet('Nell');
+  S.suggestions=['Question the frightened witness','Inspect the carriage and its seal','Follow the hooded stranger','Talk to Constable Thorn'];
+  addLog('sys',useAI()?'✦ The AI Game Master is running your investigation. Type anything. Start with ? to ask the GM a question.':'Classic Game Master active. Type what you do, or tap a suggestion.');
+  autosave();
+ }else redrawLog();
+ render();
+}
+function openSide(){$('#side').classList.add('open')}
+$('#sideToggle').onclick=()=>$('#side').classList.toggle('open');
+$('#sideClose').onclick=()=>$('#side').classList.remove('open');
+$('#caseBtn').onclick=()=>{panelTab='case';openSide();render()};
+$('#tabs').addEventListener('click',e=>{const b=e.target.closest('button[data-t]');if(!b)return;panelTab=b.dataset.t;renderPanel()});
+$('#panel').addEventListener('click',e=>{const b=e.target.closest('[data-use],[data-buy],[data-go],[data-die],[data-a],[data-cast],[data-analyze],[data-accuse],[data-alibi],[data-present]');if(!b||busy)return;
+ if(b.dataset.alibi){const k=b.dataset.alibi;addLog('you',`Ask ${SUSPECTS[k].name} where they were on the murder nights.`);takeStatement(k);tick(1);render();autosave();return}
+ if(b.dataset.present){const k=b.dataset.present;const sel=$(`select[data-pick="${k}"]`);if(sel&&sel.value!=='')presentEvidence(k,+sel.value);return}
+ if(b.dataset.analyze!=null){analyze(+b.dataset.analyze);return}
+ if(b.dataset.accuse){$('#side').classList.remove('open');accuse(b.dataset.accuse);return}
+ if(b.dataset.cast){const C=cls();S.char.slots--;const d=rollExpr(addMod(C.spell.dmg+'+0',am(C.caster)));addLog('roll',`${C.spell.name} ${d.text}`);heal(d.total,C.spell.name);render();autosave();return}
+ if(b.dataset.die){const r=rollExpr('1d'+b.dataset.die);clack(3);addLog('roll',`🎲 d${b.dataset.die}: ${r.total}`);return}
+ if(b.dataset.use){if(S.combat){combatAction('potion');return}useItem(b.dataset.use);render();autosave();return}
+ if(b.dataset.buy){buy(b.dataset.buy);render();autosave();return}
+ if(b.dataset.go){if(S.combat)return;const id=b.dataset.go;if(id===S.loc||!(loc().exits||[]).includes(id))return;$('#side').classList.remove('open');act('Go to '+locName(id).replace(/^The /,''));return}
+ if(b.dataset.a){$('#side').classList.remove('open');act(b.dataset.a)}
+});
+$('#foes').addEventListener('click',e=>{const b=e.target.closest('[data-tgt]');if(!b||!S.combat)return;S.combat.target=+b.dataset.tgt;renderCombat()});
+$('#combatActs').addEventListener('click',e=>{const b=e.target.closest('[data-c]');if(b)combatAction(b.dataset.c)});
+$('#quick').addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b)act(b.dataset.a)});
+$('#oocBtn').onclick=()=>{const i=$('#cmdIn');if(!i.value.startsWith('?'))i.value='? '+i.value;i.focus()};
+$('#cmd').addEventListener('submit',e=>{e.preventDefault();const v=$('#cmdIn').value;$('#cmdIn').value='';act(v)});
+$('#tNew').onclick=()=>{crInit();show('creator')};
+$('#tContinue').onclick=()=>{if(load())startGame(false)};
+$('#tOptions').onclick=()=>openOptions();
+$('#tHow').onclick=()=>$('#helpModal').classList.remove('hidden');
+$('#helpClose').onclick=()=>$('#helpModal').classList.add('hidden');
+$('#menuBtn').onclick=()=>{$('#mStatus').textContent='';$('#menuModal').classList.remove('hidden')};
+$('#mResume').onclick=()=>$('#menuModal').classList.add('hidden');
+$('#mSave').onclick=()=>{autosave();$('#mStatus').textContent=store.get(SAVE_KEY)?'Saved.':'Saving isn’t available in this browser — use Export.'};
+$('#mOptions').onclick=()=>{$('#menuModal').classList.add('hidden');openOptions()};
+$('#mHelp').onclick=()=>{$('#menuModal').classList.add('hidden');$('#helpModal').classList.remove('hidden')};
+$('#mTitle').onclick=()=>{autosave();$('#menuModal').classList.add('hidden');show('title')};
+$('#mExport').onclick=()=>{$('#menuModal').classList.add('hidden');$('#ioText').value=exportCode();$('#ioStatus').textContent='';$('#ioModal').classList.remove('hidden')};
+$('#ioCopy').onclick=async()=>{try{await navigator.clipboard.writeText($('#ioText').value);$('#ioStatus').textContent='Copied!'}catch(e){$('#ioText').select();$('#ioStatus').textContent='Select the text and copy it manually.'}};
+$('#ioLoad').onclick=()=>{if(importCode($('#ioText').value)){$('#ioModal').classList.add('hidden');autosave();startGame(false)}else $('#ioStatus').textContent='That save code didn’t work.'};
+$('#ioClose').onclick=()=>$('#ioModal').classList.add('hidden');
+$('#endC').onclick=()=>{$('#endModal').classList.add('hidden');$('#endC').classList.add('hidden');if(load())startGame(false);else show('title')};
+$('#endB').onclick=()=>{$('#endModal').classList.add('hidden');$('#endC').classList.add('hidden');show('title')};
+function openOptions(){$('#oMode').value=settings.mode;$('#oTone').value=settings.tone;$('#oLen').value=settings.length;$('#oDiff').value=settings.difficulty;$('#oSpeed').value=String(settings.speed);$('#oAuto').checked=settings.autoRoll;$('#oSound').checked=settings.sound;updateAINote();Music.updateUI();$('#optModal').classList.remove('hidden')}
+$('#oClose').onclick=()=>{settings={mode:$('#oMode').value,tone:$('#oTone').value,length:$('#oLen').value,difficulty:$('#oDiff').value,speed:+$('#oSpeed').value,autoRoll:$('#oAuto').checked,sound:$('#oSound').checked};store.set(SET_KEY,settings);$('#optModal').classList.add('hidden');updateAINote();if(S)render()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')$$('.modal:not(#diceModal):not(#endModal)').forEach(m=>m.classList.add('hidden'))});
+
+/* title: drifting embers over the cover art */
+(function(){const cv=$('#embers'),cx=cv.getContext('2d');let W,H,ps=[];function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight}rs();addEventListener('resize',rs);
+ for(let i=0;i<55;i++)ps.push({x:Math.random()*W,y:Math.random()*H,v:.3+Math.random()*.9,r:.6+Math.random()*1.8,p:Math.random()*6});
+ (function f(){if(!$('#title').classList.contains('hidden')){cx.clearRect(0,0,W,H);ps.forEach(p=>{p.y-=p.v;p.x+=Math.sin(p.p+=.02)*.4;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}cx.fillStyle=`rgba(255,${90+Math.floor(p.r*30)},${110},${.3+.3*Math.sin(p.p)})`;cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fill()})}requestAnimationFrame(f)})();})();
+
+Music.init();updateContinue();updateAINote();initAI();
+</script>
+</body>
+</html>
